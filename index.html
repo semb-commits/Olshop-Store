@@ -21,7 +21,7 @@
       margin-bottom:5px
     }
 
-.banner{
+   .banner{
       background:linear-gradient(90deg,#ff6b6b,#ff8e53);
       color:white;
       text-align:center;
@@ -30,7 +30,7 @@
       font-size:14px
     }
 
-.sticky-wrap{
+   .sticky-wrap{
       position:sticky;
       top:0;
       background:#f8f9fa;
@@ -39,17 +39,17 @@
       box-shadow:0 2px 4px rgba(0,0,0,0.05)
     }
 
-.container{
+   .container{
       padding:0 15px 15px;
       max-width:900px;
       margin:auto
     }
 
-.search-box{
+   .search-box{
       margin-bottom:12px
     }
 
-.search-box input{
+   .search-box input{
       width:100%;
       padding:10px;
       border:1px solid #ddd;
@@ -57,7 +57,7 @@
       font-size:14px
     }
 
-.filter{
+   .filter{
       display:flex;
       gap:8px;
       overflow-x:auto;
@@ -65,7 +65,7 @@
       padding-bottom:5px
     }
 
-.filter button{
+   .filter button{
       flex-shrink:0;
       padding:8px 14px;
       border:none;
@@ -75,18 +75,18 @@
       cursor:pointer
     }
 
-.filter button.active{
+   .filter button.active{
       background:#007bff;
       color:white
     }
 
-.produk{
+   .produk{
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:12px
     }
 
-.card{
+   .card{
       background:white;
       border-radius:12px;
       padding:8px;
@@ -96,7 +96,7 @@
       position:relative
     }
 
-.badge-diskon{
+   .badge-diskon{
       position:absolute;
       top:8px;
       left:8px;
@@ -109,22 +109,24 @@
       z-index:2
     }
 
-.card img{
+    /* EDIT: biar gambar ga kepotong */
+   .card img{
       width:100%;
-      height:180px;
-      object-fit:cover;
+      aspect-ratio:4/5; /* rasio foto produk */
+      object-fit:contain; /* jangan di-crop */
+      background:#f1f1f1; /* background kalau ada space kosong */
       border-radius:8px;
       cursor:pointer
     }
 
-.kategori{
+   .kategori{
       font-size:11px;
       color:#666;
       margin-top:4px;
       text-transform:uppercase
     }
 
-.nama{
+   .nama{
       font-weight:bold;
       margin-top:4px;
       font-size:14px;
@@ -132,27 +134,27 @@
       cursor:pointer
     }
 
-.harga{
+   .harga{
       color:#ff4757;
       font-weight:bold;
       margin-top:4px;
       font-size:15px
     }
 
-.harga-asli{
+   .harga-asli{
       font-size:12px;
       color:#999;
       text-decoration:line-through;
       margin-left:5px
     }
 
-.rating{
+   .rating{
       font-size:12px;
       color:#ffa502;
       margin-top:4px
     }
 
-.btn-wa{
+   .btn-wa{
       display:block;
       background:#25D366;
       color:white;
@@ -165,7 +167,7 @@
       font-size:14px
     }
 
-.kosong{
+   .kosong{
       text-align:center;
       color:#666;
       margin-top:50px;
@@ -173,7 +175,7 @@
     }
 
     /* Modal Pesanan */
-.modal{
+   .modal{
       display:none;
       position:fixed;
       top:0;left:0;
@@ -184,7 +186,7 @@
       z-index:999
     }
 
-.modal-content{
+   .modal-content{
       background:white;
       padding:20px;
       border-radius:10px;
@@ -194,7 +196,7 @@
       overflow-y:auto
     }
 
-.modal-content input,.modal-content textarea,.modal-content select,.modal-content button{
+   .modal-content input,.modal-content textarea,.modal-content select,.modal-content button{
       width:100%;
       padding:12px;
       margin:8px 0;
@@ -203,26 +205,26 @@
       font-size:14px
     }
 
-.modal-content textarea{
+   .modal-content textarea{
       resize:none;
       height:70px
     }
 
-.modal-content button{
+   .modal-content button{
       background:#25D366;
       color:white;
       border:none;
       font-weight:bold
     }
 
-.close{
+   .close{
       float:right;
       font-size:24px;
       cursor:pointer
     }
 
     /* Modal Detail Produk */
-.detail-modal{
+   .detail-modal{
       display:none;
       position:fixed;
       top:0;left:0;
@@ -232,7 +234,7 @@
       overflow-y:auto
     }
 
-.detail-content{
+   .detail-content{
       background:white;
       max-width:600px;
       margin:20px auto;
@@ -240,75 +242,121 @@
       overflow:hidden
     }
 
-.detail-images{
-      display:grid;
-      gap:5px;
+    /* EDIT: Slider foto */
+   .slider-wrap{
+      position:relative;
       background:#000
     }
 
-.detail-images img{
+   .slider{
+      display:flex;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+    }
+   .slider::-webkit-scrollbar{display:none}
+
+   .slider img{
+      flex-shrink:0;
       width:100%;
-      height:200px;
-      object-fit:cover
+      height:350px;
+      object-fit:contain;
+      background:#000;
+      scroll-snap-align:start
     }
 
-.detail-info{
+   .slider-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(0,0,0,0.5);
+      color:white;
+      border:none;
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      font-size:20px;
+      cursor:pointer;
+      z-index:2
+    }
+   .slider-btn.prev{left:10px}
+   .slider-btn.next{right:10px}
+
+   .slider-dots{
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      padding:10px;
+      background:#000
+    }
+   .slider-dots span{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#555;
+    }
+   .slider-dots span.active{
+      background:white;
+    }
+
+   .detail-info{
       padding:20px
     }
 
-.detail-info h2{
+   .detail-info h2{
       font-size:20px;
       margin-bottom:10px
     }
 
-.detail-price{
+   .detail-price{
       font-size:24px;
       color:#ff4757;
       font-weight:bold;
       margin:10px 0
     }
 
-.detail-desc{
+   .detail-desc{
       color:#666;
       line-height:1.6;
       margin:15px 0
     }
 
-  /* Ukuran */
-.size-wrap{
+    /* Ukuran */
+   .size-wrap{
       margin:15px 0
     }
-.size-wrap label{
+   .size-wrap label{
       font-weight:bold;
       display:block;
       margin-bottom:8px
     }
-.size-options{
+   .size-options{
       display:flex;
       gap:8px;
       flex-wrap:wrap
     }
-.size-options button{
+   .size-options button{
       padding:8px 16px;
       border:1px solid #ddd;
       border-radius:6px;
       background:white;
       cursor:pointer
     }
-.size-options button.active{
+   .size-options button.active{
       background:#007bff;
       color:white;
       border-color:#007bff
     }
 
-  /* Qty */
-.qty-wrap{
+    /* Qty */
+   .qty-wrap{
       display:flex;
       align-items:center;
       gap:10px;
       margin:15px 0
     }
-.qty-wrap button{
+   .qty-wrap button{
       width:35px;
       height:35px;
       border:1px solid #ddd;
@@ -317,15 +365,16 @@
       border-radius:6px;
       cursor:pointer
     }
-.qty-wrap input{
+   .qty-wrap input{
       width:60px;
       text-align:center;
       padding:8px
     }
 
     @media(min-width:600px){
-.produk{grid-template-columns:repeat(3,1fr)}
-.card img{height:200px}
+     .produk{grid-template-columns:repeat(3,1fr)}
+     .card img{aspect-ratio:1/1}
+     .slider img{height:450px}
     }
   </style>
 </head>
@@ -362,7 +411,14 @@
 <!-- Modal Detail Produk -->
 <div id="detailModal" class="detail-modal" onclick="tutupDetail()">
   <div class="detail-content" onclick="event.stopPropagation()">
-    <div id="detailImages" class="detail-images"></div>
+    <!-- EDIT: Ganti jadi slider -->
+    <div class="slider-wrap">
+      <div class="slider" id="detailSlider"></div>
+      <button class="slider-btn prev" onclick="slidePrev()">‹</button>
+      <button class="slider-btn next" onclick="slideNext()">›</button>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+
     <div class="detail-info">
       <span class="close" onclick="tutupDetail()">&times;</span>
       <div class="kategori" id="detailKategori"></div>
@@ -418,6 +474,7 @@ let produkPilihan = null;
 let kategoriAktif = 'Semua';
 let ukuranPilihan = 'M';
 let qtyPilihan = 1;
+let slideIndex = 0;
 const noWA = "62895351432524";
 
 function tampilkanProduk() {
@@ -470,11 +527,18 @@ function bukaDetail(index){
   produkPilihan = p;
   ukuranPilihan = 'M';
   qtyPilihan = 1;
+  slideIndex = 0;
 
-  let imgHTML = p.gambar.map(g => `<img src="${g}" onerror="this.style.display='none'">`).join('');
-  let cols = p.gambar.length === 1? '1fr' : 'repeat(2, 1fr)';
-  document.getElementById('detailImages').style.gridTemplateColumns = cols;
-  document.getElementById('detailImages').innerHTML = imgHTML;
+  // EDIT: Buat slider foto
+  let slider = document.getElementById('detailSlider');
+  let dots = document.getElementById('sliderDots');
+  slider.innerHTML = '';
+  dots.innerHTML = '';
+
+  p.gambar.forEach((g, i) => {
+    slider.innerHTML += `<img src="${g}" onerror="this.style.display='none'">`;
+    dots.innerHTML += `<span class="${i==0?'active':''}"></span>`;
+  });
 
   document.getElementById('detailKategori').textContent = p.kategori || 'Umum';
   document.getElementById('detailNama').textContent = p.nama;
@@ -499,6 +563,33 @@ function bukaDetail(index){
   };
 
   document.getElementById('detailModal').style.display = 'block';
+
+  // Update dot aktif saat scroll
+  slider.onscroll = () => {
+    let index = Math.round(slider.scrollLeft / slider.offsetWidth);
+    updateDots(index);
+  };
+}
+
+function slideNext(){
+  let slider = document.getElementById('detailSlider');
+  slideIndex = Math.min(slideIndex + 1, slider.children.length - 1);
+  slider.scrollTo({left: slideIndex * slider.offsetWidth, behavior:'smooth'});
+  updateDots(slideIndex);
+}
+
+function slidePrev(){
+  let slider = document.getElementById('detailSlider');
+  slideIndex = Math.max(slideIndex - 1, 0);
+  slider.scrollTo({left: slideIndex * slider.offsetWidth, behavior:'smooth'});
+  updateDots(slideIndex);
+}
+
+function updateDots(index){
+  slideIndex = index;
+  document.querySelectorAll('#sliderDots span').forEach((dot,i)=>{
+    dot.classList.toggle('active', i==index);
+  });
 }
 
 function tutupDetail(){
@@ -576,4 +667,4 @@ tampilkanProduk();
 </script>
 
 </body>
-    </html>
+  </html>
