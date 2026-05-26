@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tambah Produk</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:20px;max-width:400px;margin:auto;background:#f8f9fa}
+    h3{text-align:center;margin-bottom:20px}
+    label{font-weight:bold;font-size:14px;display:block;margin-top:10px}
+    input,select,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box;border:1px solid #ccc;border-radius:6px;font-size:15px}
+    textarea{resize:none;height:80px}
+    button{background:#007bff;color:white;border:none;font-weight:bold;cursor:pointer}
+    #preview{max-width:100%;margin-top:10px;border-radius:8px;display:none}
+    #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
+    .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
+    .produk-item img{max-width:80px;margin-right:5px;border-radius:4px}
+    .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
+    .info-extra{font-size:12px;color:#666;margin-top:4px}
+    
+    /* Size checkbox */
+    .size-wrap{margin-top:10px}
+    .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+    .size-options input{width:auto;margin:0}
+  </style>
+</head>
+<body>
+
+<h3>Tambah Produk</h3>
+
+<label>Nama Produk</label>
+<input type="text" id="namaProduk" placeholder="Contoh: Kemeja Putih">
+
+<label>Harga</label>
+<input type="number" id="hargaProduk" placeholder="Contoh: 50000">
+
+<label>Kategori</label>
+<select id="kategori">
+  <option value="Baju">Baju</option>
+  <option value="Celana">Celana</option>
+  <option value="Tas">Tas</option>
+  <option value="Sepatu">Sepatu</option>
+  <option value="Lainnya">Lainnya</option>
+</select>
+
+<label>Diskon % (Opsional)</label>
+<input type="number" id="diskon" placeholder="Contoh: 20" min="0" max="90">
+
+<label>Rating (Opsional)</label>
+<input type="number" id="rating" placeholder="Contoh: 4.8" step="0.1" min="0" max="5">
+
+<label>Terjual (Opsional)</label>
+<input type="number" id="terjual" placeholder="Contoh: 150" min="0">
+
+<label>Deskripsi Produk (Opsional)</label>
+<textarea id="deskripsi" placeholder="Contoh: Bahan katun 100%, adem dan nyaman dipakai sehari-hari"></textarea>
+
+<div class="size-wrap">
+  <label>Ukuran Tersedia:</label>
+  <div class="size-options">
+    <label><input type="checkbox" value="S"> S</label>
+    <label><input type="checkbox" value="M" checked> M</label>
+    <label><input type="checkbox" value="L" checked> L</label>
+    <label><input type="checkbox" value="XL" checked> XL</label>
+    <label><input type="checkbox" value="XXL"> XXL</label>
+  </div>
+</div>
+
+<label>Link Gambar Produk</label>
+<input type="text" id="gambar1" placeholder="Tempel link gambar 1">
+<input type="text" id="gambar2" placeholder="Tempel link gambar 2">
+<input type="text" id="gambar3" placeholder="Tempel link gambar 3">
+<input type="text" id="gambar4" placeholder="Tempel link gambar 4">
+
+<img id="preview">
+
+<button id="btnSubmit">Simpan Produk</button>
+<button id="btnHapusSemua" style="background:#dc3545">Hapus Semua Produk</button>
+<p id="status"></p>
+
+<h3>Produk Tersimpan</h3>
+<div id="daftarProduk"></div>
+
+<script>
+// Preview gambar pertama
+document.getElementById('gambar1').oninput = e => {
+  const url = e.target.value;
+  document.getElementById('preview').src = url;
+  document.getElementById('preview').style.display = url ? 'block' : 'none';
+};
+
+// Ambil ukuran yang dicentang
+function getUkuranDipilih(){
+  let checkboxes = document.querySelectorAll('.size-options input:checked');
+  return Array.from(checkboxes).map(cb => cb.value);
+}
+
+// Simpan produk
+document.getElementById('btnSubmit').onclick = () => {
+  const nama = document.getElementById('namaProduk').value.trim();
+  const harga = document.getElementById('hargaProduk').value.trim();
+  const kategori = document.getElementById('kategori').value;
+  const diskon = document.getElementById('diskon').value.trim();
+  const rating = document.getElementById('rating').value.trim();
+  const terjual = document.getElementById('terjual').value.trim();
+  const deskripsi = document.getElementById('deskripsi').value.trim();
+  const ukuran = getUkuranDipilih();
+  
+  const gambar = [
+    document.getElementById('gambar1').value.trim(),
+    document.getElementById('gambar2').value.trim(),
+    document.getElementById('gambar3').value.trim(),
+    document.getElementById('gambar4').value.trim()
+  ].filter(url => url !== '');
+
+  if (!nama || !harga || gambar.length === 0) {
+    alert('Isi nama, harga, dan minimal 1 link gambar');
+    return;
+  }
+
+  if(ukuran.length === 0){
+    alert('Pilih minimal 1 ukuran');
+    return;
+  }
+
+  let produk = JSON.parse(localStorage.getItem('produk')) || [];
+  produk.push({
+    nama, 
+    harga, 
+    kategori, 
+    gambar,
+    ukuran,
+    diskon: diskon? parseInt(diskon) : 0,
+    rating: rating? parseFloat(rating) : 4.8,
+    terjual: terjual? parseInt(terjual) : Math.floor(Math.random() * 500) + 50,
+    deskripsi: deskripsi || "Bahan berkualitas, nyaman dipakai sehari-hari. Cocok untuk kerja, kuliah, atau hangout."
+  });
+  localStorage.setItem('produk', JSON.stringify(produk));
+
+  document.getElementById('status').innerText = '✅ Produk berhasil disimpan!';
+  resetForm();
+  tampilkanProduk();
+};
+
+// Reset form
+function resetForm(){
+  document.getElementById('namaProduk').value = '';
+  document.getElementById('hargaProduk').value = '';
+  document.getElementById('diskon').value = '';
+  document.getElementById('rating').value = '';
+  document.getElementById('terjual').value = '';
+  document.getElementById('deskripsi').value = '';
+  document.getElementById('gambar1').value = '';
+  document.getElementById('gambar2').value = '';
+  document.getElementById('gambar3').value = '';
+  document.getElementById('gambar4').value = '';
+  document.getElementById('preview').style.display = 'none';
+  document.querySelectorAll('.size-options input').forEach(cb => {
+    cb.checked = (cb.value === 'M' || cb.value === 'L' || cb.value === 'XL');
+  });
+}
+
+// Tampilkan produk dari localStorage
+function tampilkanProduk() {
+  let produk = JSON.parse(localStorage.getItem('produk')) || [];
+  let html = '';
+  
+  produk.forEach((p, i) => {
+    html += `<div class="produk-item">
+      <strong>${p.nama}</strong><br>
+      <small style="color:#666">${p.kategori || 'Umum'}</small><br>
+      Rp ${parseInt(p.harga).toLocaleString('id-ID')}
+      ${p.diskon > 0? `<span style="color:red"> -${p.diskon}%</span>` : ''}<br>
+      <div class="info-extra">⭐ ${p.rating || 4.8} | Terjual ${p.terjual || 0}+</div>
+      <div class="info-extra">Ukuran: ${(p.ukuran || ['M','L','XL']).join(', ')}</div>
+      <small style="color:#888">${p.deskripsi.substring(0, 60)}${p.deskripsi.length > 60 ? '...' : ''}</small><br>
+      ${p.gambar.map(g => `<img src="${g}">`).join('')}
+      <button class="btn-hapus" onclick="hapusProduk(${i})">Hapus</button>
+    </div>`;
+  });
+  
+  document.getElementById('daftarProduk').innerHTML = html || '<p>Belum ada produk</p>';
+}
+
+// Hapus 1 produk
+function hapusProduk(index){
+  if(confirm('Hapus produk ini?')){
+    let produk = JSON.parse(localStorage.getItem('produk')) || [];
+    produk.splice(index, 1);
+    localStorage.setItem('produk', JSON.stringify(produk));
+    tampilkanProduk();
+    document.getElementById('status').innerText = 'Produk dihapus';
+  }
+}
+
+// Hapus semua
+document.getElementById('btnHapusSemua').onclick = () => {
+  if(confirm('Hapus semua produk?')){
+    localStorage.removeItem('produk');
+    tampilkanProduk();
+    document.getElementById('status').innerText = 'Semua produk dihapus';
+  }
+};
+
+// Load saat buka halaman
+tampilkanProduk();
+</script>
+</body>
+  </html>
