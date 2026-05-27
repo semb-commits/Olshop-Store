@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Olshopin Store</title>
+  <title>Olshopintar Store</title>
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
@@ -21,16 +21,7 @@
       margin-bottom:5px
     }
 
-   .banner{
-      background:linear-gradient(90deg,#ff6b6b,#ff8e53);
-      color:white;
-      text-align:center;
-      padding:12px;
-      font-weight:bold;
-      font-size:14px
-    }
-
-   .sticky-wrap{
+  .sticky-wrap{
       position:sticky;
       top:0;
       background:#f8f9fa;
@@ -39,17 +30,17 @@
       box-shadow:0 2px 4px rgba(0,0,0,0.05)
     }
 
-   .container{
+  .container{
       padding:0 15px 15px;
       max-width:900px;
       margin:auto
     }
 
-   .search-box{
+  .search-box{
       margin-bottom:12px
     }
 
-   .search-box input{
+  .search-box input{
       width:100%;
       padding:10px;
       border:1px solid #ddd;
@@ -57,7 +48,7 @@
       font-size:14px
     }
 
-   .filter{
+  .filter{
       display:flex;
       gap:8px;
       overflow-x:auto;
@@ -65,7 +56,7 @@
       padding-bottom:5px
     }
 
-   .filter button{
+  .filter button{
       flex-shrink:0;
       padding:8px 14px;
       border:none;
@@ -75,18 +66,18 @@
       cursor:pointer
     }
 
-   .filter button.active{
+  .filter button.active{
       background:#007bff;
       color:white
     }
 
-   .produk{
+  .produk{
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:12px
     }
 
-   .card{
+  .card{
       background:white;
       border-radius:12px;
       padding:8px;
@@ -96,7 +87,7 @@
       position:relative
     }
 
-   .badge-diskon{
+  .badge-diskon{
       position:absolute;
       top:8px;
       left:8px;
@@ -109,24 +100,23 @@
       z-index:2
     }
 
-    /* EDIT: biar gambar ga kepotong */
-   .card img{
+  .card img{
       width:100%;
-      aspect-ratio:4/5; /* rasio foto produk */
-      object-fit:contain; /* jangan di-crop */
-      background:#f1f1f1; /* background kalau ada space kosong */
+      aspect-ratio:4/5;
+      object-fit:contain;
+      background:#f1f1f1;
       border-radius:8px;
       cursor:pointer
     }
 
-   .kategori{
+  .kategori{
       font-size:11px;
       color:#666;
       margin-top:4px;
       text-transform:uppercase
     }
 
-   .nama{
+  .nama{
       font-weight:bold;
       margin-top:4px;
       font-size:14px;
@@ -134,27 +124,27 @@
       cursor:pointer
     }
 
-   .harga{
+  .harga{
       color:#ff4757;
       font-weight:bold;
       margin-top:4px;
       font-size:15px
     }
 
-   .harga-asli{
+  .harga-asli{
       font-size:12px;
       color:#999;
       text-decoration:line-through;
       margin-left:5px
     }
 
-   .rating{
+  .rating{
       font-size:12px;
       color:#ffa502;
       margin-top:4px
     }
 
-   .btn-wa{
+  .btn-wa{
       display:block;
       background:#25D366;
       color:white;
@@ -167,7 +157,7 @@
       font-size:14px
     }
 
-   .kosong{
+  .kosong{
       text-align:center;
       color:#666;
       margin-top:50px;
@@ -175,7 +165,7 @@
     }
 
     /* Modal Pesanan */
-   .modal{
+  .modal{
       display:none;
       position:fixed;
       top:0;left:0;
@@ -186,7 +176,7 @@
       z-index:999
     }
 
-   .modal-content{
+  .modal-content{
       background:white;
       padding:20px;
       border-radius:10px;
@@ -196,7 +186,7 @@
       overflow-y:auto
     }
 
-   .modal-content input,.modal-content textarea,.modal-content select,.modal-content button{
+  .modal-content input,.modal-content textarea,.modal-content select,.modal-content button{
       width:100%;
       padding:12px;
       margin:8px 0;
@@ -205,26 +195,26 @@
       font-size:14px
     }
 
-   .modal-content textarea{
+  .modal-content textarea{
       resize:none;
       height:70px
     }
 
-   .modal-content button{
+  .modal-content button{
       background:#25D366;
       color:white;
       border:none;
       font-weight:bold
     }
 
-   .close{
+  .close{
       float:right;
       font-size:24px;
       cursor:pointer
     }
 
     /* Modal Detail Produk */
-   .detail-modal{
+  .detail-modal{
       display:none;
       position:fixed;
       top:0;left:0;
@@ -234,7 +224,7 @@
       overflow-y:auto
     }
 
-   .detail-content{
+  .detail-content{
       background:white;
       max-width:600px;
       margin:20px auto;
@@ -242,22 +232,21 @@
       overflow:hidden
     }
 
-    /* EDIT: Slider foto */
-   .slider-wrap{
+  .slider-wrap{
       position:relative;
       background:#000
     }
 
-   .slider{
+  .slider{
       display:flex;
       overflow-x:auto;
       scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:none;
     }
-   .slider::-webkit-scrollbar{display:none}
+  .slider::-webkit-scrollbar{display:none}
 
-   .slider img{
+  .slider img{
       flex-shrink:0;
       width:100%;
       height:350px;
@@ -266,7 +255,7 @@
       scroll-snap-align:start
     }
 
-   .slider-btn{
+  .slider-btn{
       position:absolute;
       top:50%;
       transform:translateY(-50%);
@@ -280,83 +269,81 @@
       cursor:pointer;
       z-index:2
     }
-   .slider-btn.prev{left:10px}
-   .slider-btn.next{right:10px}
+  .slider-btn.prev{left:10px}
+  .slider-btn.next{right:10px}
 
-   .slider-dots{
+  .slider-dots{
       display:flex;
       justify-content:center;
       gap:6px;
       padding:10px;
       background:#000
     }
-   .slider-dots span{
+  .slider-dots span{
       width:8px;
       height:8px;
       border-radius:50%;
       background:#555;
     }
-   .slider-dots span.active{
+  .slider-dots span.active{
       background:white;
     }
 
-   .detail-info{
+  .detail-info{
       padding:20px
     }
 
-   .detail-info h2{
+  .detail-info h2{
       font-size:20px;
       margin-bottom:10px
     }
 
-   .detail-price{
+  .detail-price{
       font-size:24px;
       color:#ff4757;
       font-weight:bold;
       margin:10px 0
     }
 
-   .detail-desc{
+  .detail-desc{
       color:#666;
       line-height:1.6;
       margin:15px 0
     }
 
-    /* Ukuran */
-   .size-wrap{
+  .size-wrap{
       margin:15px 0
     }
-   .size-wrap label{
+  .size-wrap label{
       font-weight:bold;
       display:block;
       margin-bottom:8px
     }
-   .size-options{
+  .size-options{
       display:flex;
       gap:8px;
       flex-wrap:wrap
     }
-   .size-options button{
+  .size-options button{
       padding:8px 16px;
       border:1px solid #ddd;
       border-radius:6px;
       background:white;
       cursor:pointer
     }
-   .size-options button.active{
+  .size-options button.active{
       background:#007bff;
       color:white;
       border-color:#007bff
     }
 
-    /* Qty */
-   .qty-wrap{
+  .qty-wrap{
       display:flex;
       align-items:center;
       gap:10px;
       margin:15px 0
     }
-   .qty-wrap button{
+  .qty-wrap button{
       width:35px;
       height:35px;
       border:1px solid #ddd;
@@ -365,29 +352,42 @@
       border-radius:6px;
       cursor:pointer
     }
-   .qty-wrap input{
+  .qty-wrap input{
       width:60px;
       text-align:center;
       padding:8px
     }
 
+    /* FOOTER BARU */
+   footer{
+      background:#222;
+      color:#ccc;
+      text-align:center;
+      padding:25px 15px;
+      margin-top:40px;
+      font-size:14px
+    }
+   footer h4{
+      color:white;
+      margin-bottom:8px
+    }
+   footer p{
+      margin:4px 0
+    }
+
     @media(min-width:600px){
-     .produk{grid-template-columns:repeat(3,1fr)}
-     .card img{aspect-ratio:1/1}
-     .slider img{height:450px}
+    .produk{grid-template-columns:repeat(3,1fr)}
+    .card img{aspect-ratio:1/1}
+    .slider img{height:450px}
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>🛍️ Olshopin Store</h1>
+  <h1>🛍️ Olshopintar Store</h1>
   <p>Belanja mudah, cepat, aman</p>
 </header>
-
-<div class="banner">
-  🔥 PROMO HARI INI! Diskon s.d 50% untuk semua produk
-</div>
 
 <div class="sticky-wrap">
   <div class="search-box">
@@ -400,6 +400,7 @@
     <button onclick="filterKategori('Celana')">Celana</button>
     <button onclick="filterKategori('Tas')">Tas</button>
     <button onclick="filterKategori('Sepatu')">Sepatu</button>
+    <button onclick="filterKategori('Aksesoris')">Aksesoris</button>
   </div>
 </div>
 
@@ -411,7 +412,6 @@
 <!-- Modal Detail Produk -->
 <div id="detailModal" class="detail-modal" onclick="tutupDetail()">
   <div class="detail-content" onclick="event.stopPropagation()">
-    <!-- EDIT: Ganti jadi slider -->
     <div class="slider-wrap">
       <div class="slider" id="detailSlider"></div>
       <button class="slider-btn prev" onclick="slidePrev()">‹</button>
@@ -426,10 +426,9 @@
       <div class="rating" id="detailRating"></div>
       <div class="detail-price" id="detailHarga"></div>
       <div class="detail-desc" id="detailDesc">
-        Bahan berkualitas, nyaman dipakai sehari-hari. Cocok untuk kerja, kuliah, atau hangout.
+        Bahan berkualitas, nyaman dipakai sehari-hari.
       </div>
 
-      <!-- Pilih Ukuran -->
       <div class="size-wrap">
         <label>Ukuran:</label>
         <div class="size-options" id="sizeOptions">
@@ -439,7 +438,6 @@
         </div>
       </div>
 
-      <!-- Pilih Jumlah -->
       <div class="qty-wrap">
         <label>Jumlah:</label>
         <button onclick="kurangiQty()">-</button>
@@ -457,8 +455,17 @@
   <div class="modal-content">
     <span class="close" onclick="tutupModal()">&times;</span>
     <h3>Detail Pesanan</h3>
-    <input type="text" id="namaPembeli" placeholder="Nama Lengkap">
-    <textarea id="alamatPembeli" placeholder="Alamat Lengkap: Jl. Contoh No.123, Kec. ABC, Kota XYZ"></textarea>
+    <input type="text" id="namaPembeli" placeholder="Nama Lengkap" required>
+    <input type="tel" id="waPembeli" placeholder="Nomor WhatsApp Aktif" required>
+    <textarea id="alamatPembeli" placeholder="Alamat Lengkap: Jl. Contoh No.123" required></textarea>
+
+    <!-- BARU: Kode Pos, RT, RW -->
+    <div style="display:flex; gap:8px;">
+      <input type="text" id="kodepos" placeholder="Kode Pos" required>
+      <input type="text" id="rt" placeholder="RT" required>
+      <input type="text" id="rw" placeholder="RW" required>
+    </div>
+
     <select id="metodeBayar">
       <option value="COD">COD - Bayar di Tempat</option>
       <option value="Transfer">Transfer Bank</option>
@@ -469,6 +476,14 @@
   </div>
 </div>
 
+<!-- FOOTER BARU -->
+<footer>
+  <h4>Olshopintar Store</h4>
+  <p>WA: 0895351432524</p>
+  <p>Alamat: Tulungagung, Jawa Timur</p>
+  <p>© 2026 Olshopintar. All Rights Reserved.</p>
+</footer>
+
 <script>
 let produkPilihan = null;
 let kategoriAktif = 'Semua';
@@ -476,6 +491,42 @@ let ukuranPilihan = 'M';
 let qtyPilihan = 1;
 let slideIndex = 0;
 const noWA = "62895351432524";
+
+// SAMPLE PRODUK BARU: Hoodie, Jam Tangan, Sepatu
+const produkDefault = [
+  {
+    nama: "Hoodie Polos Hitam",
+    harga: 185000,
+    kategori: "Baju",
+    diskon: 15,
+    gambar: ["https://via.placeholder.com/400x500?text=Hoodie"],
+    rating: 4.9,
+    terjual: 120
+  },
+  {
+    nama: "Jam Tangan Analog Pria",
+    harga: 95000,
+    kategori: "Aksesoris",
+    diskon: 10,
+    gambar: ["https://via.placeholder.com/400x500?text=Jam+Tangan"],
+    rating: 4.7,
+    terjual: 85
+  },
+  {
+    nama: "Sepatu Sneakers Putih",
+    harga: 210000,
+    kategori: "Sepatu",
+    diskon: 20,
+    gambar: ["https://via.placeholder.com/400x500?text=Sepatu"],
+    rating: 4.8,
+    terjual: 200
+  }
+];
+
+// Simpan ke localStorage kalau kosong
+if(!localStorage.getItem('produk')){
+  localStorage.setItem('produk', JSON.stringify(produkDefault));
+}
 
 function tampilkanProduk() {
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
@@ -529,7 +580,6 @@ function bukaDetail(index){
   qtyPilihan = 1;
   slideIndex = 0;
 
-  // EDIT: Buat slider foto
   let slider = document.getElementById('detailSlider');
   let dots = document.getElementById('sliderDots');
   slider.innerHTML = '';
@@ -564,7 +614,6 @@ function bukaDetail(index){
 
   document.getElementById('detailModal').style.display = 'block';
 
-  // Update dot aktif saat scroll
   slider.onscroll = () => {
     let index = Math.round(slider.scrollLeft / slider.offsetWidth);
     updateDots(index);
@@ -635,15 +684,23 @@ function tutupModal(){
   document.getElementById('modal').style.display = 'none';
   document.getElementById('namaPembeli').value = '';
   document.getElementById('alamatPembeli').value = '';
+  document.getElementById('waPembeli').value = '';
+  document.getElementById('kodepos').value = '';
+  document.getElementById('rt').value = '';
+  document.getElementById('rw').value = '';
 }
 
 function kirimWA(){
   let nama = document.getElementById('namaPembeli').value;
+  let wa = document.getElementById('waPembeli').value;
   let alamat = document.getElementById('alamatPembeli').value;
+  let kodepos = document.getElementById('kodepos').value;
+  let rt = document.getElementById('rt').value;
+  let rw = document.getElementById('rw').value;
   let metode = document.getElementById('metodeBayar').value;
 
-  if(nama === '' || alamat === ''){
-    alert('Nama dan alamat wajib diisi!');
+  if(nama === '' || alamat === '' || wa === '' || kodepos === '' || rt === '' || rw === ''){
+    alert('Semua data wajib diisi!');
     return;
   }
 
@@ -651,7 +708,10 @@ function kirimWA(){
 
   let pesan = `Halo, saya mau pesan:%0A
 *Nama:* ${nama}%0A
+*No WA:* ${wa}%0A
 *Alamat:* ${alamat}%0A
+*RT/RW:* ${rt}/${rw}%0A
+*Kode Pos:* ${kodepos}%0A
 *Produk:* ${produkPilihan.nama}%0A
 *Ukuran:* ${ukuranPilihan}%0A
 *Jumlah:* ${qtyPilihan} pcs%0A
