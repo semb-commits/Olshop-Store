@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://semb-commits.github.io/Olshop/sitemap.xml
+Sitemap: https://olshop-store.netlify.app/sitemap.xml
 
 Disallow: /admin.html
