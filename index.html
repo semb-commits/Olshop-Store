@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
-
-  <!-- Kode verifikasi Google Search Console -->
   <meta name="google-site-verification" content="ctLb4NTy167TKH-eNXjgJjLugB1RU2inZ72iN-VXt9c" />
 
   <title>Olshopintar Store</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:Arial,sans-serif;background:#f8f9fa}
-    header{background:#007bff;color:white;padding:20px;text-align:center}
-    header h1{font-size:24px;margin-bottom:5px}
+    header{background:#007bff;color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    header h1{font-size:22px;margin-bottom:5px}
+   .user-box{display:flex;align-items:center;gap:10px}
+   .user-box img{width:32px;height:32px;border-radius:50%}
+   .user-box button{background:white;color:#007bff;border:none;padding:6px 12px;border-radius:6px;font-weight:bold;cursor:pointer}
 .sticky-wrap{position:sticky;top:0;background:#f8f9fa;padding:15px 15px 5px;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
 .container{padding:0 15px 15px;max-width:900px;margin:auto}
 .search-box{margin-bottom:12px}
@@ -66,13 +66,19 @@
     footer h4{color:white;margin-bottom:8px}
     footer p{margin:4px 0}
     @media(min-width:600px){.produk{grid-template-columns:repeat(3,1fr)}.card img{aspect-ratio:1/1}.slider img{height:450px}}
+    @media(max-width:500px){header{flex-direction:column;align-items:flex-start;gap:10px}}
   </style>
 </head>
 <body>
 
 <header>
-  <h1>🛍️ Olshopintar Store</h1>
-  <p>Belanja mudah, cepat, aman</p>
+  <div>
+    <h1>🛍️ Olshopintar Store</h1>
+    <p>Belanja mudah, cepat, aman</p>
+  </div>
+  <div class="user-box" id="userBox">
+    <button id="loginBtn">Login Google</button>
+  </div>
 </header>
 
 <div class="sticky-wrap">
@@ -159,8 +165,8 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// Config Firebase lo
 const firebaseConfig = {
   apiKey: "AIzaSyANsON6_quuTxVk5P2jt43skLHjhhpO33M",
   authDomain: "olshopin-25ef6.firebaseapp.com",
@@ -174,6 +180,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 let produkList = [];
 let produkPilihan = null;
@@ -182,6 +190,30 @@ let ukuranPilihan = '';
 let qtyPilihan = 1;
 let slideIndex = 0;
 const noWA = "62895351432524";
+
+// Auth state listener
+onAuthStateChanged(auth, (user) => {
+  const userBox = document.getElementById('userBox');
+  if(user){
+    userBox.innerHTML = `
+      <img src="${user.photoURL}" alt="profile">
+      <span>${user.displayName}</span>
+      <button onclick="logout()">Logout</button>
+    `;
+  } else {
+    userBox.innerHTML = `<button id="loginBtn">Login Google</button>`;
+    document.getElementById('loginBtn').onclick = loginWithGoogle;
+  }
+});
+
+window.loginWithGoogle = () => {
+  signInWithPopup(auth, provider)
+   .catch(err => alert("Login gagal: " + err.message));
+}
+
+window.logout = () => {
+  signOut(auth);
+}
 
 // Ambil data dari Firebase secara realtime
 const produkRef = ref(db, 'produk');
