@@ -15,32 +15,42 @@
     #preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     #preview img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
     #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
-
- .produk-item{border:1px solid #ddd;padding:12px;margin-top:12px;border-radius:8px;background:white}
- .produk-header{display:flex;gap:10px;align-items:flex-start}
- .produk-header img{width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0}
- .produk-info{flex:1}
- .produk-info strong{font-size:15px}
- .produk-info small{color:#666}
- .info-extra{font-size:12px;color:#666;margin-top:4px}
- .btn-group{display:flex;gap:8px;margin-top:10px}
- .btn-edit{background:#ffc107;color:#000;padding:6px 12px;font-size:13px;width:auto}
- .btn-delete{background:#dc3545;padding:6px 12px;font-size:13px;width:auto}
-
- .size-wrap{margin-top:10px;display:none}
- .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
- .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
- .size-options input{width:auto;margin:0}
- .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
- .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
- .upload-box input{display:none}
- .upload-box label{display:block;cursor:pointer;color:#007bff}
-
- .edit-mode{background:#fff3cd;border:2px solid #ffc107}
+   .produk-item{border:1px solid #ddd;padding:12px;margin-top:12px;border-radius:8px;background:white}
+   .produk-header{display:flex;gap:10px;align-items:flex-start}
+   .produk-header img{width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0}
+   .produk-info{flex:1}
+   .produk-info strong{font-size:15px}
+   .produk-info small{color:#666}
+   .info-extra{font-size:12px;color:#666;margin-top:4px}
+   .btn-group{display:flex;gap:8px;margin-top:10px}
+   .btn-edit{background:#ffc107;color:#000;padding:6px 12px;font-size:13px;width:auto}
+   .btn-delete{background:#dc3545;padding:6px 12px;font-size:13px;width:auto}
+   .size-wrap{margin-top:10px;display:none}
+   .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+   .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+   .size-options input{width:auto;margin:0}
+   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+   .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
+   .upload-box input{display:none}
+   .upload-box label{display:block;cursor:pointer;color:#007bff}
+   .edit-mode{background:#fff3cd;border:2px solid #ffc107}
+    #loginBox{position:fixed;top:0;left:0;width:100%;height:100%;background:#f8f9fa;display:flex;justify-content:center;align-items:center;z-index:9999}
+    #loginBox.box{background:white;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);width:90%;max-width:350px}
+    #mainContent{display:none}
   </style>
 </head>
 <body>
 
+<div id="loginBox">
+  <div class="box">
+    <h3>🔒 Login Admin</h3>
+    <input type="password" id="passwordInput" placeholder="Masukkan password">
+    <button onclick="cekPassword()">Masuk</button>
+    <p id="loginError" style="color:red;text-align:center;margin-top:10px;display:none">Password salah!</p>
+  </div>
+</div>
+
+<div id="mainContent">
 <h3>Tambah Produk</h3>
 
 <input type="hidden" id="editId">
@@ -105,16 +115,17 @@
 <button id="btnSubmit">Simpan Produk</button>
 <button id="btnCancel" onclick="resetForm()" style="background:#6c757d;display:none">Batal Edit</button>
 <button id="btnHapusSemua" style="background:#dc3545">Hapus Semua Produk</button>
+<button onclick="logout()" style="background:#6c757d">Logout</button>
 <p id="status"></p>
 
 <h3>📦 Produk Tersimpan</h3>
 <div id="daftarProduk"></div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, set, remove, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, remove, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// Config Firebase lo
 const firebaseConfig = {
   apiKey: "AIzaSyANsON6_quuTxVk5P2jt43skLHjhhpO33M",
   authDomain: "olshopin-25ef6.firebaseapp.com",
@@ -130,209 +141,229 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const produkRef = ref(db, 'produk');
 
+const ADMIN_PASSWORD = "admin12345"; // GANTI PASSWORD LO DISINI
 let gambarBase64 = [];
 let produkList = [];
 
-const ukuranConfig = {
-  'Sepatu': ['29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44'],
-  'Kemeja': ['S','M','L','XL','XXL'],
-  'Kaos': ['S','M','L','XL','XXL'],
-  'Hoodie': ['S','M','L','XL','XXL'],
-  'Celana': ['28','29','30','31','32','33','34','36'],
-  'Tas': ['S','M','L'],
-  'Aksesoris': ['S','M','L'],
-  'Elektronik': [],
-  'Skincare': []
-};
-
-function ubahKategori(){
-  const kat = document.getElementById('kategori').value;
-  const sizeWrap = document.getElementById('sizeWrap');
-  const sizeOptions = document.getElementById('sizeOptions');
-  const ukuranDetailWrap = document.getElementById('ukuranDetailWrap');
-
-  sizeOptions.innerHTML = '';
-
-  if(ukuranConfig[kat].length === 0){
-    sizeWrap.style.display = 'none';
-    ukuranDetailWrap.style.display = 'none';
+window.cekPassword = function() {
+  const input = document.getElementById('passwordInput').value;
+  if(input === ADMIN_PASSWORD) {
+    sessionStorage.setItem('adminLoggedIn', 'true');
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    initApp();
   } else {
-    sizeWrap.style.display = 'block';
-    ukuranDetailWrap.style.display = (kat === 'Sepatu' || kat === 'Elektronik' || kat === 'Skincare')? 'none' : 'block';
-    ukuranConfig[kat].forEach(u => {
-      sizeOptions.innerHTML += `<label><input type="checkbox" value="${u}"> ${u}</label>`;
-    });
+    document.getElementById('loginError').style.display = 'block';
   }
 }
-window.ubahKategori = ubahKategori;
 
-document.getElementById('gambarUpload').onchange = e => {
-  const files = e.target.files;
-  gambarBase64 = [];
-  document.getElementById('preview').innerHTML = '';
-  if(files.length === 0) return;
-
-  const filesToRead = Array.from(files).slice(0, 4);
-  filesToRead.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      gambarBase64.push(e.target.result);
-      document.getElementById('preview').innerHTML += `<img src="${e.target.result}">`;
-    };
-    reader.readAsDataURL(file);
-  });
-};
-
-function getUkuranDipilih(){
-  return Array.from(document.querySelectorAll('.size-options input:checked')).map(cb => cb.value);
+window.logout = function() {
+  sessionStorage.removeItem('adminLoggedIn');
+  location.reload();
 }
 
-document.getElementById('btnSubmit').onclick = async () => {
-  const nama = document.getElementById('namaProduk').value.trim();
-  const harga = document.getElementById('hargaProduk').value.trim();
-  const kategori = document.getElementById('kategori').value;
-  const diskon = document.getElementById('diskon').value.trim();
-  const ongkir = document.getElementById('ongkir').value.trim();
-  const deskripsi = document.getElementById('deskripsi').value.trim();
-  const bahan = document.getElementById('bahan').value.trim();
-  const ukuranDetail = document.getElementById('ukuranDetail').value.trim();
-  const ukuran = getUkuranDipilih();
-  const editId = document.getElementById('editId').value;
+// Cek kalau udah login sebelumnya
+if(sessionStorage.getItem('adminLoggedIn') === 'true') {
+  document.getElementById('loginBox').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  initApp();
+}
 
-  if (!nama ||!harga || gambarBase64.length === 0) {
-    alert('Isi nama, harga, dan upload minimal 1 gambar');
-    return;
-  }
-
-  if(ukuranConfig[kategori].length > 0 && ukuran.length === 0){
-    alert('Pilih minimal 1 ukuran');
-    return;
-  }
-
-  let dataProduk = {
-    nama,harga,kategori,gambar:gambarBase64,ukuran,
-    diskon: diskon? parseInt(diskon) : 0,
-    ongkir: ongkir? parseInt(ongkir) : 0,
-    bahan: bahan || "Tidak disebutkan",
-    ukuranDetail: ukuranDetail || "",
-    deskripsi: deskripsi || "Produk original, kualitas terjamin.",
-    createdAt: Date.now()
+function initApp() {
+  const ukuranConfig = {
+    'Sepatu': ['29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44'],
+    'Kemeja': ['S','M','L','XL','XXL'],
+    'Kaos': ['S','M','L','XL','XXL'],
+    'Hoodie': ['S','M','L','XL','XXL'],
+    'Celana': ['28','29','30','31','32','33','34','36'],
+    'Tas': ['S','M','L'],
+    'Aksesoris': ['S','M','L'],
+    'Elektronik': [],
+    'Skincare': []
   };
 
-  if(editId === ''){
-    await push(produkRef, dataProduk);
-    document.getElementById('status').innerText = '✅ Produk berhasil disimpan!';
-  } else {
-    await update(ref(db, 'produk/' + editId), dataProduk);
-    document.getElementById('status').innerText = '✅ Produk berhasil diupdate!';
+  window.ubahKategori = function(){
+    const kat = document.getElementById('kategori').value;
+    const sizeWrap = document.getElementById('sizeWrap');
+    const sizeOptions = document.getElementById('sizeOptions');
+    const ukuranDetailWrap = document.getElementById('ukuranDetailWrap');
+
+    sizeOptions.innerHTML = '';
+
+    if(ukuranConfig[kat].length === 0){
+      sizeWrap.style.display = 'none';
+      ukuranDetailWrap.style.display = 'none';
+    } else {
+      sizeWrap.style.display = 'block';
+      ukuranDetailWrap.style.display = (kat === 'Sepatu' || kat === 'Elektronik' || kat === 'Skincare')? 'none' : 'block';
+      ukuranConfig[kat].forEach(u => {
+        sizeOptions.innerHTML += `<label><input type="checkbox" value="${u}"> ${u}</label>`;
+      });
+    }
   }
 
-  resetForm();
-  setTimeout(()=>document.getElementById('status').innerText = '', 2000);
-};
+  document.getElementById('gambarUpload').onchange = e => {
+    const files = e.target.files;
+    gambarBase64 = [];
+    document.getElementById('preview').innerHTML = '';
+    if(files.length === 0) return;
 
-window.editProduk = function(id){
-  let p = produkList.find(p => p.id === id);
-
-  document.getElementById('editId').value = id;
-  document.getElementById('namaProduk').value = p.nama;
-  document.getElementById('hargaProduk').value = p.harga;
-  document.getElementById('kategori').value = p.kategori;
-  document.getElementById('diskon').value = p.diskon;
-  document.getElementById('ongkir').value = p.ongkir;
-  document.getElementById('deskripsi').value = p.deskripsi;
-  document.getElementById('bahan').value = p.bahan;
-  document.getElementById('ukuranDetail').value = p.ukuranDetail;
-
-  ubahKategori();
-
-  setTimeout(() => {
-    document.querySelectorAll('.size-options input').forEach(cb => {
-      cb.checked = p.ukuran.includes(cb.value);
+    const filesToRead = Array.from(files).slice(0, 4);
+    filesToRead.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        gambarBase64.push(e.target.result);
+        document.getElementById('preview').innerHTML += `<img src="${e.target.result}">`;
+      };
+      reader.readAsDataURL(file);
     });
-  }, 100);
+  };
 
-  gambarBase64 = p.gambar;
-  document.getElementById('preview').innerHTML = p.gambar.map(g => `<img src="${g}">`).join('');
+  function getUkuranDipilih(){
+    return Array.from(document.querySelectorAll('.size-options input:checked')).map(cb => cb.value);
+  }
 
-  document.getElementById('btnSubmit').textContent = 'Update Produk';
-  document.getElementById('btnCancel').style.display = 'block';
-  document.querySelector('h3').scrollIntoView({behavior:'smooth'});
-}
+  document.getElementById('btnSubmit').onclick = async () => {
+    try {
+      const nama = document.getElementById('namaProduk').value.trim();
+      const harga = document.getElementById('hargaProduk').value.trim();
+      const kategori = document.getElementById('kategori').value;
+      const diskon = document.getElementById('diskon').value.trim();
+      const ongkir = document.getElementById('ongkir').value.trim();
+      const deskripsi = document.getElementById('deskripsi').value.trim();
+      const bahan = document.getElementById('bahan').value.trim();
+      const ukuranDetail = document.getElementById('ukuranDetail').value.trim();
+      const ukuran = getUkuranDipilih();
+      const editId = document.getElementById('editId').value;
 
-window.resetForm = function(){
-  document.getElementById('editId').value = '';
-  document.getElementById('namaProduk').value = '';
-  document.getElementById('hargaProduk').value = '';
-  document.getElementById('diskon').value = '';
-  document.getElementById('ongkir').value = '';
-  document.getElementById('deskripsi').value = '';
-  document.getElementById('bahan').value = '';
-  document.getElementById('ukuranDetail').value = '';
-  document.getElementById('gambarUpload').value = '';
-  gambarBase64 = [];
-  document.getElementById('preview').innerHTML = '';
-  document.getElementById('btnSubmit').textContent = 'Simpan Produk';
-  document.getElementById('btnCancel').style.display = 'none';
-  document.querySelector('h3').textContent = 'Tambah Produk';
-  ubahKategori();
-}
+      if (!nama ||!harga || gambarBase64.length === 0) {
+        alert('Isi nama, harga, dan upload minimal 1 gambar');
+        return;
+      }
 
-function tampilkanProduk() {
-  let html = '';
+      document.getElementById('btnSubmit').disabled = true;
+      document.getElementById('btnSubmit').textContent = 'Menyimpan...';
 
-  if(produkList.length === 0){
-    html = '<p style="text-align:center;color:#666;margin-top:20px">Belum ada produk</p>';
-  } else {
-    produkList.forEach((p) => {
-      html += `<div class="produk-item">
-        <div class="produk-header">
-          <img src="${p.gambar[0]}" onerror="this.src='https://via.placeholder.com/70'">
-          <div class="produk-info">
-            <strong>${p.nama}</strong><br>
-            <small>${p.kategori} • Rp ${parseInt(p.harga).toLocaleString('id-ID')}</small>
-            ${p.diskon > 0? `<small style="color:red"> • Diskon ${p.diskon}%</small>` : ''}
-            ${p.ukuran.length > 0? `<div class="info-extra">Ukuran: ${p.ukuran.join(', ')}</div>` : ''}
-            ${p.bahan? `<div class="info-extra">🧵 ${p.bahan}</div>` : ''}
-          </div>
-        </div>
-        <div class="btn-group">
-          <button class="btn-edit" onclick="editProduk('${p.id}')">Edit</button>
-          <button class="btn-delete" onclick="hapusProduk('${p.id}')">Hapus</button>
-        </div>
-      </div>`;
+      let dataProduk = {
+        nama,harga,kategori,gambar:gambarBase64,ukuran,
+        diskon: diskon? parseInt(diskon) : 0,
+        ongkir: ongkir? parseInt(ongkir) : 0,
+        bahan: bahan || "Tidak disebutkan",
+        ukuranDetail: ukuranDetail || "",
+        deskripsi: deskripsi || "Produk original, kualitas terjamin.",
+        createdAt: Date.now()
+      };
+
+      if(editId === ''){
+        await push(produkRef, dataProduk);
+        document.getElementById('status').innerText = '✅ Produk berhasil disimpan!';
+      } else {
+        await update(ref(db, 'produk/' + editId), dataProduk);
+        document.getElementById('status').innerText = '✅ Produk berhasil diupdate!';
+      }
+
+      resetForm();
+      setTimeout(()=>document.getElementById('status').innerText = '', 2000);
+
+    } catch (error) {
+      console.error(error);
+      alert("Gagal simpan: " + error.message);
+    } finally {
+      document.getElementById('btnSubmit').disabled = false;
+      document.getElementById('btnSubmit').textContent = 'Simpan Produk';
+    }
+  };
+
+  window.resetForm = function(){
+    document.getElementById('editId').value = '';
+    document.getElementById('namaProduk').value = '';
+    document.getElementById('hargaProduk').value = '';
+    document.getElementById('diskon').value = '';
+    document.getElementById('ongkir').value = '';
+    document.getElementById('deskripsi').value = '';
+    document.getElementById('bahan').value = '';
+    document.getElementById('ukuranDetail').value = '';
+    document.getElementById('gambarUpload').value = '';
+    gambarBase64 = [];
+    document.getElementById('preview').innerHTML = '';
+    document.getElementById('btnSubmit').textContent = 'Simpan Produk';
+    document.getElementById('btnCancel').style.display = 'none';
+    document.querySelector('h3').textContent = 'Tambah Produk';
+    ubahKategori();
+  }
+
+  onValue(produkRef, (snapshot) => {
+    produkList = [];
+    snapshot.forEach((child) => {
+      produkList.push({id: child.key,...child.val()});
     });
-  }
-
-  document.getElementById('daftarProduk').innerHTML = html;
-}
-
-window.hapusProduk = async function(id){
-  if(confirm('Hapus produk ini?')){
-    await remove(ref(db, 'produk/' + id));
-    document.getElementById('status').innerText = 'Produk dihapus';
-    setTimeout(()=>document.getElementById('status').innerText = '', 2000);
-  }
-}
-
-document.getElementById('btnHapusSemua').onclick = async () => {
-  if(confirm('Hapus semua produk? Data tidak bisa dikembalikan!')){
-    await remove(produkRef);
-    document.getElementById('status').innerText = 'Semua produk dihapus';
-  }
-};
-
-// Ambil data realtime dari Firebase
-onValue(produkRef, (snapshot) => {
-  produkList = [];
-  snapshot.forEach((child) => {
-    produkList.push({id: child.key,...child.val()});
+    produkList.reverse();
+    tampilkanProduk();
   });
-  produkList.reverse(); // biar yang terbaru di atas
-  tampilkanProduk();
-});
 
-ubahKategori();
+  function tampilkanProduk() {
+    let html = '';
+    if(produkList.length === 0){
+      html = '<p style="text-align:center;color:#666;margin-top:20px">Belum ada produk</p>';
+    } else {
+      produkList.forEach((p) => {
+        html += `<div class="produk-item">
+          <div class="produk-header">
+            <img src="${p.gambar[0]}" onerror="this.src='https://via.placeholder.com/70'">
+            <div class="produk-info">
+              <strong>${p.nama}</strong><br>
+              <small>${p.kategori} • Rp ${parseInt(p.harga).toLocaleString('id-ID')}</small>
+              ${p.diskon > 0? `<small style="color:red"> • Diskon ${p.diskon}%</small>` : ''}
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn-edit" onclick="editProduk('${p.id}')">Edit</button>
+            <button class="btn-delete" onclick="hapusProduk('${p.id}')">Hapus</button>
+          </div>
+        </div>`;
+      });
+    }
+    document.getElementById('daftarProduk').innerHTML = html;
+  }
+
+  window.editProduk = function(id){
+    let p = produkList.find(p => p.id === id);
+    if(!p) return;
+    document.getElementById('editId').value = id;
+    document.getElementById('namaProduk').value = p.nama;
+    document.getElementById('hargaProduk').value = p.harga;
+    document.getElementById('kategori').value = p.kategori;
+    document.getElementById('diskon').value = p.diskon;
+    document.getElementById('ongkir').value = p.ongkir;
+    document.getElementById('deskripsi').value = p.deskripsi;
+    document.getElementById('bahan').value = p.bahan;
+    document.getElementById('ukuranDetail').value = p.ukuranDetail;
+    ubahKategori();
+    setTimeout(() => {
+      document.querySelectorAll('.size-options input').forEach(cb => {
+        cb.checked = p.ukuran.includes(cb.value);
+      });
+    }, 100);
+    gambarBase64 = p.gambar;
+    document.getElementById('preview').innerHTML = p.gambar.map(g => `<img src="${g}">`).join('');
+    document.getElementById('btnSubmit').textContent = 'Update Produk';
+    document.getElementById('btnCancel').style.display = 'block';
+  }
+
+  window.hapusProduk = async function(id){
+    if(confirm('Hapus produk ini?')){
+      await remove(ref(db, 'produk/' + id));
+    }
+  }
+
+  document.getElementById('btnHapusSemua').onclick = async () => {
+    if(confirm('Hapus semua produk?')){
+      await remove(produkRef);
+    }
+  }
+
+  ubahKategori();
+}
 </script>
 </body>
   </html>
