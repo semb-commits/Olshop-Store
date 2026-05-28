@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://semb-commits.github.io/Olshop/sitemap.xml
+
+Disallow: /admin.html
