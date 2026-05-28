@@ -11,26 +11,39 @@
     input,select,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box;border:1px solid #ccc;border-radius:6px;font-size:15px}
     textarea{resize:none;height:80px}
     button{background:#007bff;color:white;border:none;font-weight:bold;cursor:pointer}
+    button:disabled{background:#aaa;cursor:not-allowed}
     #preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     #preview img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
     #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
-   .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
-   .produk-item img{width:60px;height:60px;object-fit:cover;margin-right:5px;border-radius:4px}
-   .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
-   .info-extra{font-size:12px;color:#666;margin-top:4px}
-   .size-wrap{margin-top:10px;display:none}
-   .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-   .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
-   .size-options input{width:auto;margin:0}
-   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-   .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
-   .upload-box input{display:none}
-   .upload-box label{display:block;cursor:pointer;color:#007bff}
+
+  .produk-item{border:1px solid #ddd;padding:12px;margin-top:12px;border-radius:8px;background:white}
+  .produk-header{display:flex;gap:10px;align-items:flex-start}
+  .produk-header img{width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0}
+  .produk-info{flex:1}
+  .produk-info strong{font-size:15px}
+  .produk-info small{color:#666}
+  .info-extra{font-size:12px;color:#666;margin-top:4px}
+  .btn-group{display:flex;gap:8px;margin-top:10px}
+  .btn-edit{background:#ffc107;color:#000;padding:6px 12px;font-size:13px;width:auto}
+  .btn-delete{background:#dc3545;padding:6px 12px;font-size:13px;width:auto}
+
+  .size-wrap{margin-top:10px;display:none}
+  .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+  .size-options input{width:auto;margin:0}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
+  .upload-box input{display:none}
+  .upload-box label{display:block;cursor:pointer;color:#007bff}
+
+  .edit-mode{background:#fff3cd;border:2px solid #ffc107}
   </style>
 </head>
 <body>
 
 <h3>Tambah Produk</h3>
+
+<input type="hidden" id="editIndex">
 
 <label>Nama Produk</label>
 <input type="text" id="namaProduk" placeholder="Contoh: Hoodie Polos Abu">
@@ -85,15 +98,16 @@
 <div class="upload-box">
   <input type="file" id="gambarUpload" accept="image/*" multiple>
   <label for="gambarUpload">📷 Pilih Gambar</label>
-  <small>Max 4 gambar</small>
+  <small>Max 4 gambar. Pilih lagi = ganti gambar lama</small>
 </div>
 <div id="preview"></div>
 
 <button id="btnSubmit">Simpan Produk</button>
+<button id="btnCancel" onclick="resetForm()" style="background:#6c757d;display:none">Batal Edit</button>
 <button id="btnHapusSemua" style="background:#dc3545">Hapus Semua Produk</button>
 <p id="status"></p>
 
-<h3>Produk Tersimpan</h3>
+<h3>📦 Produk Tersimpan</h3>
 <div id="daftarProduk"></div>
 
 <script>
@@ -126,7 +140,7 @@ function ubahKategori(){
     sizeWrap.style.display = 'block';
     ukuranDetailWrap.style.display = (kat === 'Sepatu' || kat === 'Elektronik' || kat === 'Skincare')? 'none' : 'block';
     ukuranConfig[kat].forEach(u => {
-      sizeOptions.innerHTML += `<label><input type="checkbox" value="${u}" ${['M','L','XL','36','37','38','39','40'].includes(u)?'checked':''}> ${u}</label>`;
+      sizeOptions.innerHTML += `<label><input type="checkbox" value="${u}"> ${u}</label>`;
     });
   }
 }
@@ -135,8 +149,10 @@ document.getElementById('gambarUpload').onchange = e => {
   const files = e.target.files;
   gambarBase64 = [];
   document.getElementById('preview').innerHTML = '';
-  if(files.length > 4){alert('Max 4 gambar');return;}
-  Array.from(files).forEach(file => {
+  if(files.length === 0) return;
+
+  const filesToRead = Array.from(files).slice(0, 4);
+  filesToRead.forEach(file => {
     const reader = new FileReader();
     reader.onload = e => {
       gambarBase64.push(e.target.result);
@@ -160,6 +176,7 @@ document.getElementById('btnSubmit').onclick = () => {
   const bahan = document.getElementById('bahan').value.trim();
   const ukuranDetail = document.getElementById('ukuranDetail').value.trim();
   const ukuran = getUkuranDipilih();
+  const editIndex = document.getElementById('editIndex').value;
 
   if (!nama ||!harga || gambarBase64.length === 0) {
     alert('Isi nama, harga, dan upload minimal 1 gambar');
@@ -172,22 +189,62 @@ document.getElementById('btnSubmit').onclick = () => {
   }
 
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
-  produk.push({
+  let dataProduk = {
     nama,harga,kategori,gambar:gambarBase64,ukuran,
     diskon: diskon? parseInt(diskon) : 0,
     ongkir: ongkir? parseInt(ongkir) : 0,
     bahan: bahan || "Tidak disebutkan",
     ukuranDetail: ukuranDetail || "",
     deskripsi: deskripsi || "Produk original, kualitas terjamin."
-  });
+  };
+
+  if(editIndex === ''){
+    produk.push(dataProduk);
+    document.getElementById('status').innerText = '✅ Produk berhasil disimpan!';
+  } else {
+    produk[editIndex] = dataProduk;
+    document.getElementById('status').innerText = '✅ Produk berhasil diupdate!';
+  }
 
   localStorage.setItem('produk', JSON.stringify(produk));
-  document.getElementById('status').innerText = '✅ Produk berhasil disimpan!';
   resetForm();
   tampilkanProduk();
 };
 
+function editProduk(index){
+  let produk = JSON.parse(localStorage.getItem('produk')) || [];
+  let p = produk[index];
+
+  document.getElementById('editIndex').value = index;
+  document.getElementById('namaProduk').value = p.nama;
+  document.getElementById('hargaProduk').value = p.harga;
+  document.getElementById('kategori').value = p.kategori;
+  document.getElementById('diskon').value = p.diskon;
+  document.getElementById('ongkir').value = p.ongkir;
+  document.getElementById('deskripsi').value = p.deskripsi;
+  document.getElementById('bahan').value = p.bahan;
+  document.getElementById('ukuranDetail').value = p.ukuranDetail;
+
+  ubahKategori();
+
+  // Set checkbox ukuran
+  setTimeout(() => {
+    document.querySelectorAll('.size-options input').forEach(cb => {
+      cb.checked = p.ukuran.includes(cb.value);
+    });
+  }, 100);
+
+  // Tampilkan gambar lama
+  gambarBase64 = p.gambar;
+  document.getElementById('preview').innerHTML = p.gambar.map(g => `<img src="${g}">`).join('');
+
+  document.getElementById('btnSubmit').textContent = 'Update Produk';
+  document.getElementById('btnCancel').style.display = 'block';
+  document.querySelector('h3').scrollIntoView({behavior:'smooth'});
+}
+
 function resetForm(){
+  document.getElementById('editIndex').value = '';
   document.getElementById('namaProduk').value = '';
   document.getElementById('hargaProduk').value = '';
   document.getElementById('diskon').value = '';
@@ -198,27 +255,40 @@ function resetForm(){
   document.getElementById('gambarUpload').value = '';
   gambarBase64 = [];
   document.getElementById('preview').innerHTML = '';
+  document.getElementById('btnSubmit').textContent = 'Simpan Produk';
+  document.getElementById('btnCancel').style.display = 'none';
+  document.querySelector('h3').textContent = 'Tambah Produk';
   ubahKategori();
 }
 
 function tampilkanProduk() {
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
   let html = '';
-  produk.forEach((p, i) => {
-    html += `<div class="produk-item">
-      <strong>${p.nama}</strong><br>
-      <small style="color:#666">${p.kategori}</small><br>
-      Rp ${parseInt(p.harga).toLocaleString('id-ID')}
-      ${p.diskon > 0? `<span style="color:red"> -${p.diskon}%</span>` : ''}<br>
-      ${p.ukuran.length > 0? `<div class="info-extra">Ukuran: ${p.ukuran.join(', ')}</div>` : ''}
-      ${p.bahan? `<div class="info-extra">🧵 Bahan: ${p.bahan}</div>` : ''}
-      <div style="display:flex;gap:5px;margin-top:8px">
-        ${p.gambar.slice(0,3).map(g => `<img src="${g}">`).join('')}
-      </div>
-      <button class="btn-hapus" onclick="hapusProduk(${i})">Hapus</button>
-    </div>`;
-  });
-  document.getElementById('daftarProduk').innerHTML = html || '<p>Belum ada produk</p>';
+
+  if(produk.length === 0){
+    html = '<p style="text-align:center;color:#666;margin-top:20px">Belum ada produk</p>';
+  } else {
+    produk.forEach((p, i) => {
+      html += `<div class="produk-item">
+        <div class="produk-header">
+          <img src="${p.gambar[0]}" onerror="this.src='https://via.placeholder.com/70'">
+          <div class="produk-info">
+            <strong>${p.nama}</strong><br>
+            <small>${p.kategori} • Rp ${parseInt(p.harga).toLocaleString('id-ID')}</small>
+            ${p.diskon > 0? `<small style="color:red"> • Diskon ${p.diskon}%</small>` : ''}
+            ${p.ukuran.length > 0? `<div class="info-extra">Ukuran: ${p.ukuran.join(', ')}</div>` : ''}
+            ${p.bahan? `<div class="info-extra">🧵 ${p.bahan}</div>` : ''}
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-edit" onclick="editProduk(${i})">Edit</button>
+          <button class="btn-delete" onclick="hapusProduk(${i})">Hapus</button>
+        </div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('daftarProduk').innerHTML = html;
 }
 
 function hapusProduk(index){
@@ -227,13 +297,16 @@ function hapusProduk(index){
     produk.splice(index, 1);
     localStorage.setItem('produk', JSON.stringify(produk));
     tampilkanProduk();
+    document.getElementById('status').innerText = 'Produk dihapus';
+    setTimeout(()=>document.getElementById('status').innerText = '', 2000);
   }
 }
 
 document.getElementById('btnHapusSemua').onclick = () => {
-  if(confirm('Hapus semua produk?')){
+  if(confirm('Hapus semua produk? Data tidak bisa dikembalikan!')){
     localStorage.removeItem('produk');
     tampilkanProduk();
+    document.getElementById('status').innerText = 'Semua produk dihapus';
   }
 };
 
@@ -241,4 +314,4 @@ ubahKategori();
 tampilkanProduk();
 </script>
 </body>
-  </html>
+    </html>
