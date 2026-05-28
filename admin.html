@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Produk</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+
   <style>
     body{font-family:Arial,sans-serif;padding:15px;max-width:600px;margin:auto;background:#f8f9fa}
     h3{text-align:center;margin-bottom:15px}
@@ -15,25 +20,25 @@
     #preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     #preview img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
     #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
-   .produk-item{border:1px solid #ddd;padding:12px;margin-top:12px;border-radius:8px;background:white}
-   .produk-header{display:flex;gap:10px;align-items:flex-start}
-   .produk-header img{width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0}
-   .produk-info{flex:1}
-   .produk-info strong{font-size:15px}
-   .produk-info small{color:#666}
-   .info-extra{font-size:12px;color:#666;margin-top:4px}
-   .btn-group{display:flex;gap:8px;margin-top:10px}
-   .btn-edit{background:#ffc107;color:#000;padding:6px 12px;font-size:13px;width:auto}
-   .btn-delete{background:#dc3545;padding:6px 12px;font-size:13px;width:auto}
-   .size-wrap{margin-top:10px;display:none}
-   .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-   .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
-   .size-options input{width:auto;margin:0}
-   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-   .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
-   .upload-box input{display:none}
-   .upload-box label{display:block;cursor:pointer;color:#007bff}
-   .edit-mode{background:#fff3cd;border:2px solid #ffc107}
+  .produk-item{border:1px solid #ddd;padding:12px;margin-top:12px;border-radius:8px;background:white}
+  .produk-header{display:flex;gap:10px;align-items:flex-start}
+  .produk-header img{width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0}
+  .produk-info{flex:1}
+  .produk-info strong{font-size:15px}
+  .produk-info small{color:#666}
+  .info-extra{font-size:12px;color:#666;margin-top:4px}
+  .btn-group{display:flex;gap:8px;margin-top:10px}
+  .btn-edit{background:#ffc107;color:#000;padding:6px 12px;font-size:13px;width:auto}
+  .btn-delete{background:#dc3545;padding:6px 12px;font-size:13px;width:auto}
+  .size-wrap{margin-top:10px;display:none}
+  .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+  .size-options input{width:auto;margin:0}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
+  .upload-box input{display:none}
+  .upload-box label{display:block;cursor:pointer;color:#007bff}
+  .edit-mode{background:#fff3cd;border:2px solid #ffc107}
     #loginBox{position:fixed;top:0;left:0;width:100%;height:100%;background:#f8f9fa;display:flex;justify-content:center;align-items:center;z-index:9999}
     #loginBox.box{background:white;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);width:90%;max-width:350px}
     #mainContent{display:none}
@@ -141,7 +146,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const produkRef = ref(db, 'produk');
 
-const ADMIN_PASSWORD = "admin12345"; // GANTI PASSWORD LO DISINI
+const ADMIN_PASSWORD = "admin12345";
 let gambarBase64 = [];
 let produkList = [];
 
@@ -162,7 +167,6 @@ window.logout = function() {
   location.reload();
 }
 
-// Cek kalau udah login sebelumnya
 if(sessionStorage.getItem('adminLoggedIn') === 'true') {
   document.getElementById('loginBox').style.display = 'none';
   document.getElementById('mainContent').style.display = 'block';
@@ -365,5 +369,13 @@ function initApp() {
   ubahKategori();
 }
 </script>
+
+<!-- PWA Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+
 </body>
   </html>
