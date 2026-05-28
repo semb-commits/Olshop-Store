@@ -4,379 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Olshopintar Store</title>
-
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:Arial,sans-serif;background:#f8f9fa}
-
-    header{
-      background:#007bff;
-      color:white;
-      padding:20px;
-      text-align:center
-    }
-
-    header h1{
-      font-size:24px;
-      margin-bottom:5px
-    }
-
-  .sticky-wrap{
-      position:sticky;
-      top:0;
-      background:#f8f9fa;
-      padding:15px 15px 5px;
-      z-index:100;
-      box-shadow:0 2px 4px rgba(0,0,0,0.05)
-    }
-
-  .container{
-      padding:0 15px 15px;
-      max-width:900px;
-      margin:auto
-    }
-
-  .search-box{
-      margin-bottom:12px
-    }
-
-  .search-box input{
-      width:100%;
-      padding:10px;
-      border:1px solid #ddd;
-      border-radius:8px;
-      font-size:14px
-    }
-
-  .filter{
-      display:flex;
-      gap:8px;
-      overflow-x:auto;
-      margin-bottom:15px;
-      padding-bottom:5px
-    }
-
-  .filter button{
-      flex-shrink:0;
-      padding:8px 14px;
-      border:none;
-      border-radius:20px;
-      background:#e9ecef;
-      font-size:13px;
-      cursor:pointer
-    }
-
-  .filter button.active{
-      background:#007bff;
-      color:white
-    }
-
-  .produk{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px
-    }
-
-  .card{
-      background:white;
-      border-radius:12px;
-      padding:8px;
-      box-shadow:0 2px 6px rgba(0,0,0,0.08);
-      display:flex;
-      flex-direction:column;
-      position:relative
-    }
-
-  .badge-diskon{
-      position:absolute;
-      top:8px;
-      left:8px;
-      background:#ff4757;
-      color:white;
-      padding:4px 8px;
-      border-radius:4px;
-      font-size:11px;
-      font-weight:bold;
-      z-index:2
-    }
-
-  .card img{
-      width:100%;
-      aspect-ratio:4/5;
-      object-fit:contain;
-      background:#f1f1f1;
-      border-radius:8px;
-      cursor:pointer
-    }
-
-  .kategori{
-      font-size:11px;
-      color:#666;
-      margin-top:4px;
-      text-transform:uppercase
-    }
-
-  .nama{
-      font-weight:bold;
-      margin-top:4px;
-      font-size:14px;
-      flex-grow:1;
-      cursor:pointer
-    }
-
-  .harga{
-      color:#ff4757;
-      font-weight:bold;
-      margin-top:4px;
-      font-size:15px
-    }
-
-  .harga-asli{
-      font-size:12px;
-      color:#999;
-      text-decoration:line-through;
-      margin-left:5px
-    }
-
-  .rating{
-      font-size:12px;
-      color:#ffa502;
-      margin-top:4px
-    }
-
-  .btn-wa{
-      display:block;
-      background:#25D366;
-      color:white;
-      text-align:center;
-      padding:9px;
-      border-radius:6px;
-      text-decoration:none;
-      margin-top:8px;
-      font-weight:bold;
-      font-size:14px
-    }
-
-  .kosong{
-      text-align:center;
-      color:#666;
-      margin-top:50px;
-      font-size:16px
-    }
-
-  .modal{
-      display:none;
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      background:rgba(0,0,0,0.5);
-      justify-content:center;
-      align-items:center;
-      z-index:999
-    }
-
-  .modal-content{
-      background:white;
-      padding:20px;
-      border-radius:10px;
-      width:90%;
-      max-width:400px;
-      max-height:90vh;
-      overflow-y:auto
-    }
-
-  .modal-content input,.modal-content textarea,.modal-content select,.modal-content button{
-      width:100%;
-      padding:12px;
-      margin:8px 0;
-      border-radius:6px;
-      border:1px solid #ccc;
-      font-size:14px
-    }
-
-  .modal-content textarea{
-      resize:none;
-      height:70px
-    }
-
-  .modal-content button{
-      background:#25D366;
-      color:white;
-      border:none;
-      font-weight:bold
-    }
-
-  .close{
-      float:right;
-      font-size:24px;
-      cursor:pointer
-    }
-
-  .detail-modal{
-      display:none;
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      background:rgba(0,0,0,0.8);
-      z-index:1000;
-      overflow-y:auto
-    }
-
-  .detail-content{
-      background:white;
-      max-width:600px;
-      margin:20px auto;
-      border-radius:12px;
-      overflow:hidden
-    }
-
-  .slider-wrap{
-      position:relative;
-      background:#000
-    }
-
-  .slider{
-      display:flex;
-      overflow-x:auto;
-      scroll-snap-type:x mandatory;
-      -webkit-overflow-scrolling:touch;
-      scrollbar-width:none;
-    }
-  .slider::-webkit-scrollbar{display:none}
-
-  .slider img{
-      flex-shrink:0;
-      width:100%;
-      height:350px;
-      object-fit:contain;
-      background:#000;
-      scroll-snap-align:start
-    }
-
-  .slider-btn{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      background:rgba(0,0,0,0.5);
-      color:white;
-      border:none;
-      width:40px;
-      height:40px;
-      border-radius:50%;
-      font-size:20px;
-      cursor:pointer;
-      z-index:2
-    }
-  .slider-btn.prev{left:10px}
-  .slider-btn.next{right:10px}
-
-  .slider-dots{
-      display:flex;
-      justify-content:center;
-      gap:6px;
-      padding:10px;
-      background:#000
-    }
-  .slider-dots span{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#555;
-    }
-  .slider-dots span.active{
-      background:white;
-    }
-
-  .detail-info{
-      padding:20px
-    }
-
-  .detail-info h2{
-      font-size:20px;
-      margin-bottom:10px
-    }
-
-  .detail-price{
-      font-size:24px;
-      color:#ff4757;
-      font-weight:bold;
-      margin:10px 0
-    }
-
-  .detail-desc{
-      color:#666;
-      line-height:1.6;
-      margin:15px 0
-    }
-
-  .size-wrap{
-      margin:15px 0
-    }
-  .size-wrap label{
-      font-weight:bold;
-      display:block;
-      margin-bottom:8px
-    }
-  .size-options{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap
-    }
-  .size-options button{
-      padding:8px 16px;
-      border:1px solid #ddd;
-      border-radius:6px;
-      background:white;
-      cursor:pointer
-    }
-  .size-options button.active{
-      background:#007bff;
-      color:white;
-      border-color:#007bff
-    }
-
-  .qty-wrap{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin:15px 0
-    }
-  .qty-wrap button{
-      width:35px;
-      height:35px;
-      border:1px solid #ddd;
-      background:white;
-      font-size:18px;
-      border-radius:6px;
-      cursor:pointer
-    }
-  .qty-wrap input{
-      width:60px;
-      text-align:center;
-      padding:8px
-    }
-
-    footer{
-      background:#222;
-      color:#ccc;
-      text-align:center;
-      padding:25px 15px;
-      margin-top:40px;
-      font-size:14px
-    }
-    footer h4{
-      color:white;
-      margin-bottom:8px
-    }
-    footer p{
-      margin:4px 0
-    }
-
-    @media(min-width:600px){
-    .produk{grid-template-columns:repeat(3,1fr)}
-    .card img{aspect-ratio:1/1}
-    .slider img{height:450px}
-    }
+    header{background:#007bff;color:white;padding:20px;text-align:center}
+    header h1{font-size:24px;margin-bottom:5px}
+   .sticky-wrap{position:sticky;top:0;background:#f8f9fa;padding:15px 15px 5px;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
+   .container{padding:0 15px 15px;max-width:900px;margin:auto}
+   .search-box{margin-bottom:12px}
+   .search-box input{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
+   .filter{display:flex;gap:8px;overflow-x:auto;margin-bottom:15px;padding-bottom:5px}
+   .filter button{flex-shrink:0;padding:8px 14px;border:none;border-radius:20px;background:#e9ecef;font-size:13px;cursor:pointer}
+   .filter button.active{background:#007bff;color:white}
+   .produk{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+   .card{background:white;border-radius:12px;padding:8px;box-shadow:0 2px 6px rgba(0,0,0,0.08);display:flex;flex-direction:column;position:relative}
+   .badge-diskon{position:absolute;top:8px;left:8px;background:#ff4757;color:white;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:bold;z-index:2}
+   .card img{width:100%;aspect-ratio:4/5;object-fit:contain;background:#f1f1f1;border-radius:8px;cursor:pointer}
+   .kategori{font-size:11px;color:#666;margin-top:4px;text-transform:uppercase}
+   .nama{font-weight:bold;margin-top:4px;font-size:14px;flex-grow:1;cursor:pointer}
+   .harga{color:#ff4757;font-weight:bold;margin-top:4px;font-size:15px}
+   .harga-asli{font-size:12px;color:#999;text-decoration:line-through;margin-left:5px}
+   .btn-wa{display:block;background:#25D366;color:white;text-align:center;padding:9px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold;font-size:14px}
+   .kosong{text-align:center;color:#666;margin-top:50px;font-size:16px}
+   .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:999}
+   .modal-content{background:white;padding:20px;border-radius:10px;width:90%;max-width:400px;max-height:90vh;overflow-y:auto}
+   .modal-content input,.modal-content textarea,.modal-content select,.modal-content button{width:100%;padding:12px;margin:8px 0;border-radius:6px;border:1px solid #ccc;font-size:14px}
+   .modal-content textarea{resize:none;height:70px}
+   .modal-content button{background:#25D366;color:white;border:none;font-weight:bold}
+   .close{float:right;font-size:24px;cursor:pointer}
+   .detail-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;overflow-y:auto}
+   .detail-content{background:white;max-width:600px;margin:20px auto;border-radius:12px;overflow:hidden}
+   .slider-wrap{position:relative;background:#000}
+   .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+   .slider::-webkit-scrollbar{display:none}
+   .slider img{flex-shrink:0;width:100%;height:350px;object-fit:contain;background:#000;scroll-snap-align:start}
+   .slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;z-index:2}
+   .slider-btn.prev{left:10px}
+   .slider-btn.next{right:10px}
+   .slider-dots{display:flex;justify-content:center;gap:6px;padding:10px;background:#000}
+   .slider-dots span{width:8px;height:8px;border-radius:50%;background:#555;}
+   .slider-dots span.active{background:white;}
+   .detail-info{padding:20px}
+   .detail-info h2{font-size:20px;margin-bottom:10px}
+   .detail-price{font-size:24px;color:#ff4757;font-weight:bold;margin:10px 0}
+   .detail-desc{color:#666;line-height:1.6;margin:15px 0}
+   .size-wrap{margin:15px 0;display:none}
+   .size-options{display:flex;gap:8px;flex-wrap:wrap}
+   .size-options button{padding:8px 16px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer}
+   .size-options button.active{background:#007bff;color:white;border-color:#007bff}
+   .qty-wrap{display:flex;align-items:center;gap:10px;margin:15px 0}
+   .qty-wrap button{width:35px;height:35px;border:1px solid #ddd;background:white;font-size:18px;border-radius:6px;cursor:pointer}
+   .qty-wrap input{width:60px;text-align:center;padding:8px}
+    footer{background:#222;color:#ccc;text-align:center;padding:25px 15px;margin-top:40px;font-size:14px}
+    footer h4{color:white;margin-bottom:8px}
+    footer p{margin:4px 0}
+    @media(min-width:600px){.produk{grid-template-columns:repeat(3,1fr)}.card img{aspect-ratio:1/1}.slider img{height:450px}}
   </style>
 </head>
 <body>
@@ -390,7 +72,6 @@
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Cari produk..." onkeyup="tampilkanProduk()">
   </div>
-
   <div class="filter" id="filterKategori">
     <button class="active" onclick="filterKategori('Semua')">Semua</button>
     <button onclick="filterKategori('Kemeja')">Kemeja</button>
@@ -410,7 +91,6 @@
   <div id="kosong" class="kosong" style="display:none">Produk tidak ditemukan</div>
 </div>
 
-<!-- Modal Detail Produk -->
 <div id="detailModal" class="detail-modal" onclick="tutupDetail()">
   <div class="detail-content" onclick="event.stopPropagation()">
     <div class="slider-wrap">
@@ -419,53 +99,39 @@
       <button class="slider-btn next" onclick="slideNext()">›</button>
       <div class="slider-dots" id="sliderDots"></div>
     </div>
-
     <div class="detail-info">
       <span class="close" onclick="tutupDetail()">&times;</span>
       <div class="kategori" id="detailKategori"></div>
       <h2 id="detailNama"></h2>
-      <div class="rating" id="detailRating"></div>
       <div class="detail-price" id="detailHarga"></div>
-      <div class="detail-desc" id="detailDesc">
-        Produk original, kualitas terjamin.
-      </div>
-
+      <div class="detail-desc" id="detailDesc"></div>
       <div class="size-wrap" id="sizeWrap">
         <label>Ukuran:</label>
-        <div class="size-options" id="sizeOptions">
-          <button onclick="pilihUkuran('M')">M</button>
-          <button onclick="pilihUkuran('L')">L</button>
-          <button onclick="pilihUkuran('XL')">XL</button>
-        </div>
+        <div class="size-options" id="sizeOptions"></div>
       </div>
-
       <div class="qty-wrap">
         <label>Jumlah:</label>
         <button onclick="kurangiQty()">-</button>
         <input type="number" id="qtyInput" value="1" min="1" readonly>
         <button onclick="tambahQty()">+</button>
       </div>
-
       <button class="btn-wa" id="detailBtnWA">Beli via WhatsApp</button>
     </div>
   </div>
 </div>
 
-<!-- Modal Pesanan -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="tutupModal()">&times;</span>
     <h3>Detail Pesanan</h3>
     <input type="text" id="namaPembeli" placeholder="Nama Lengkap" required>
     <input type="tel" id="waPembeli" placeholder="Nomor WhatsApp Aktif" required>
-    <textarea id="alamatPembeli" placeholder="Alamat Lengkap: Jl. Contoh No.123" required></textarea>
-
+    <textarea id="alamatPembeli" placeholder="Alamat Lengkap" required></textarea>
     <div style="display:flex; gap:8px;">
       <input type="text" id="kodepos" placeholder="Kode Pos" required>
       <input type="text" id="rt" placeholder="RT" required>
       <input type="text" id="rw" placeholder="RW" required>
     </div>
-
     <select id="metodeBayar">
       <option value="COD">COD - Bayar di Tempat</option>
       <option value="Transfer">Transfer Bank</option>
@@ -486,121 +152,27 @@
 <script>
 let produkPilihan = null;
 let kategoriAktif = 'Semua';
-let ukuranPilihan = 'M';
+let ukuranPilihan = '';
 let qtyPilihan = 1;
 let slideIndex = 0;
 const noWA = "62895351432524";
 
-// DATA PRODUK LENGKAP
 const produkDefault = [
-  // Kemeja
   {
     nama: "Kemeja putih lengan panjang",
     harga: 150000,
     kategori: "Kemeja",
     diskon: 15,
     gambar: ["https://via.placeholder.com/400x500?text=Kemeja+Panjang"],
-    rating: 4.9,
-    terjual: 49
-  },
-  {
-    nama: "Kemeja putih lengan pendek",
-    harga: 120000,
-    kategori: "Kemeja",
-    diskon: 10,
-    gambar: ["https://via.placeholder.com/400x500?text=Kemeja+Pendek"],
-    rating: 4.8,
-    terjual: 25
-  },
-
-  // Kaos
-  {
-    nama: "Kaos Polos Hitam",
-    harga: 75000,
-    kategori: "Kaos",
-    diskon: 0,
-    gambar: ["https://via.placeholder.com/400x500?text=Kaos+Hitam"],
-    rating: 4.7,
-    terjual: 80
-  },
-
-  // Hoodie
-  {
-    nama: "Hoodie Polos Abu",
-    harga: 200000,
-    kategori: "Hoodie",
-    diskon: 20,
-    gambar: ["https://via.placeholder.com/400x500?text=Hoodie+Abu"],
-    rating: 4.8,
-    terjual: 120
-  },
-
-  // Celana
-  {
-    nama: "Celana panjang warna hitam",
-    harga: 200000,
-    kategori: "Celana",
-    diskon: 20,
-    gambar: ["https://via.placeholder.com/400x500?text=Celana+Hitam"],
-    rating: 4.9,
-    terjual: 49
-  },
-
-  // Sepatu
-  {
-    nama: "Sepatu Sneakers Hitam",
-    harga: 100000,
-    kategori: "Sepatu",
-    diskon: 10,
-    gambar: ["https://via.placeholder.com/400x500?text=Sepatu"],
-    rating: 4.8,
-    terjual: 49
-  },
-
-  // Elektronik
-  {
-    nama: "HP Android 128GB",
-    harga: 1500000,
-    kategori: "Elektronik",
-    diskon: 5,
-    gambar: ["https://via.placeholder.com/400x500?text=HP+Android"],
-    rating: 4.6,
-    terjual: 15
-  },
-  {
-    nama: "Smart TV 32 Inch",
-    harga: 2200000,
-    kategori: "Elektronik",
-    diskon: 10,
-    gambar: ["https://via.placeholder.com/400x500?text=Smart+TV"],
-    rating: 4.7,
-    terjual: 8
-  },
-
-  // Skincare
-  {
-    nama: "Face Wash Gentle",
-    harga: 65000,
-    kategori: "Skincare",
-    diskon: 10,
-    gambar: ["https://via.placeholder.com/400x500?text=Face+Wash"],
-    rating: 4.9,
-    terjual: 300
-  },
-  {
-    nama: "Serum Vitamin C",
-    harga: 95000,
-    kategori: "Skincare",
-    diskon: 15,
-    gambar: ["https://via.placeholder.com/400x500?text=Serum"],
-    rating: 4.7,
-    terjual: 180
+    bahan: "Katun 100%",
+    ukuran: ["M","L","XL"],
+    deskripsi: "Kemeja katun adem, cocok buat kerja"
   }
 ];
 
-// Reset localStorage sekali biar kategori baru ke-load
-localStorage.removeItem('produk');
-localStorage.setItem('produk', JSON.stringify(produkDefault));
+if(!localStorage.getItem('produk')){
+  localStorage.setItem('produk', JSON.stringify(produkDefault));
+}
 
 function tampilkanProduk() {
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
@@ -626,20 +198,17 @@ function tampilkanProduk() {
   produk.forEach((p, i) => {
     let diskon = p.diskon || 0;
     let hargaAsli = diskon > 0? Math.round(p.harga / (1 - diskon/100)) : 0;
-    let rating = p.rating || 4.8;
-    let terjual = p.terjual || 0;
 
     container.innerHTML += `
       <div class="card">
         ${diskon > 0? `<div class="badge-diskon">Diskon ${diskon}%</div>` : ''}
-        <img src="${p.gambar[0]}" alt="${p.nama}" onclick="bukaDetail(${i})">
+        <img src="${p.gambar[0]}" alt="${p.nama}" onclick="bukaDetail(${i})" onerror="this.src='https://via.placeholder.com/400x500?text=No+Image'">
         <div class="kategori">${p.kategori}</div>
         <div class="nama" onclick="bukaDetail(${i})">${p.nama}</div>
         <div class="harga">
           Rp ${parseInt(p.harga).toLocaleString('id-ID')}
           ${diskon > 0? `<span class="harga-asli">Rp ${hargaAsli.toLocaleString('id-ID')}</span>` : ''}
         </div>
-        <div class="rating">⭐ ${rating} | Terjual ${terjual}+</div>
         <a href="#" class="btn-wa" onclick="bukaModal(${i}); event.stopPropagation()">Beli via WhatsApp</a>
       </div>
     `;
@@ -650,13 +219,20 @@ function bukaDetail(index){
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
   let p = produk[index];
   produkPilihan = p;
-  ukuranPilihan = 'M';
+  ukuranPilihan = (p.ukuran && p.ukuran[0])? p.ukuran[0] : '';
   qtyPilihan = 1;
   slideIndex = 0;
 
-  // Sembunyikan ukuran kalau kategori Skincare & Elektronik
-  document.getElementById('sizeWrap').style.display =
-    (p.kategori === 'Skincare' || p.kategori === 'Elektronik')? 'none' : 'block';
+  let showSize = p.ukuran && p.ukuran.length > 0 && p.kategori!== 'Skincare' && p.kategori!== 'Elektronik';
+  document.getElementById('sizeWrap').style.display = showSize? 'block' : 'none';
+
+  if(showSize){
+    let sizeOptions = document.getElementById('sizeOptions');
+    sizeOptions.innerHTML = '';
+    p.ukuran.forEach((u, i) => {
+      sizeOptions.innerHTML += `<button class="${i===0?'active':''}" onclick="pilihUkuran('${u}')">${u}</button>`;
+    });
+  }
 
   let slider = document.getElementById('detailSlider');
   let dots = document.getElementById('sliderDots');
@@ -670,7 +246,7 @@ function bukaDetail(index){
 
   document.getElementById('detailKategori').textContent = p.kategori;
   document.getElementById('detailNama').textContent = p.nama;
-  document.getElementById('detailRating').textContent = `⭐ ${p.rating} | Terjual ${p.terjual}+`;
+  document.getElementById('detailDesc').textContent = p.deskripsi || 'Produk original, kualitas terjamin.';
 
   let diskon = p.diskon || 0;
   let hargaAsli = diskon > 0? Math.round(p.harga / (1 - diskon/100)) : 0;
@@ -680,21 +256,15 @@ function bukaDetail(index){
   `;
 
   document.getElementById('qtyInput').value = 1;
-  document.querySelectorAll('#sizeOptions button').forEach(btn => {
-    btn.classList.remove('active');
-    if(btn.textContent === 'M') btn.classList.add('active');
-  });
-
   document.getElementById('detailBtnWA').onclick = () => {
     tutupDetail();
     bukaModal(index);
   };
-
   document.getElementById('detailModal').style.display = 'block';
 
   slider.onscroll = () => {
-    let index = Math.round(slider.scrollLeft / slider.offsetWidth);
-    updateDots(index);
+    let idx = Math.round(slider.scrollLeft / slider.offsetWidth);
+    updateDots(idx);
   };
 }
 
@@ -719,29 +289,10 @@ function updateDots(index){
   });
 }
 
-function tutupDetail(){
-  document.getElementById('detailModal').style.display = 'none';
-}
-
-function pilihUkuran(size){
-  ukuranPilihan = size;
-  document.querySelectorAll('#sizeOptions button').forEach(btn => {
-    btn.classList.remove('active');
-    if(btn.textContent === size) btn.classList.add('active');
-  });
-}
-
-function tambahQty(){
-  qtyPilihan++;
-  document.getElementById('qtyInput').value = qtyPilihan;
-}
-
-function kurangiQty(){
-  if(qtyPilihan > 1){
-    qtyPilihan--;
-    document.getElementById('qtyInput').value = qtyPilihan;
-  }
-}
+function tutupDetail(){document.getElementById('detailModal').style.display = 'none';}
+function pilihUkuran(size){ukuranPilihan = size;document.querySelectorAll('#sizeOptions button').forEach(btn => {btn.classList.remove('active');if(btn.textContent === size) btn.classList.add('active');});}
+function tambahQty(){qtyPilihan++;document.getElementById('qtyInput').value = qtyPilihan;}
+function kurangiQty(){if(qtyPilihan > 1){qtyPilihan--;document.getElementById('qtyInput').value = qtyPilihan;}}
 
 function filterKategori(kategori){
   kategoriAktif = kategori;
@@ -783,7 +334,6 @@ function kirimWA(){
   }
 
   let totalHarga = produkPilihan.harga * qtyPilihan;
-
   let pesan = `Halo, saya mau pesan:%0A
 *Nama:* ${nama}%0A
 *No WA:* ${wa}%0A
@@ -791,7 +341,7 @@ function kirimWA(){
 *RT/RW:* ${rt}/${rw}%0A
 *Kode Pos:* ${kodepos}%0A
 *Produk:* ${produkPilihan.nama}%0A
-${(produkPilihan.kategori!== 'Skincare' && produkPilihan.kategori!== 'Elektronik')? `*Ukuran:* ${ukuranPilihan}%0A` : ''}
+${(produkPilihan.ukuran && produkPilihan.ukuran.length > 0)? `*Ukuran:* ${ukuranPilihan}%0A` : ''}
 *Jumlah:* ${qtyPilihan} pcs%0A
 *Harga:* Rp ${parseInt(totalHarga).toLocaleString('id-ID')}%0A
 *Pembayaran:* ${metode}%0A%0A
@@ -803,6 +353,5 @@ Mohon diproses ya, terima kasih.`;
 
 tampilkanProduk();
 </script>
-
 </body>
-  </html>
+          </html>
