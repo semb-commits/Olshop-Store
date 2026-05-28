@@ -11,24 +11,21 @@
     input,select,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box;border:1px solid #ccc;border-radius:6px;font-size:15px}
     textarea{resize:none;height:80px}
     button{background:#007bff;color:white;border:none;font-weight:bold;cursor:pointer}
-    button:disabled{background:#aaa;cursor:not-allowed}
     #preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     #preview img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
     #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
-  .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
-  .produk-item img{width:60px;height:60px;object-fit:cover;margin-right:5px;border-radius:4px}
-  .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
-  .info-extra{font-size:12px;color:#666;margin-top:4px}
-
-  .size-wrap{margin-top:10px;display:none}
-  .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-  .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
-  .size-options input{width:auto;margin:0}
-
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
-  .upload-box input{display:none}
-  .upload-box label{display:block;cursor:pointer;color:#007bff}
+   .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
+   .produk-item img{width:60px;height:60px;object-fit:cover;margin-right:5px;border-radius:4px}
+   .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
+   .info-extra{font-size:12px;color:#666;margin-top:4px}
+   .size-wrap{margin-top:10px;display:none}
+   .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+   .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+   .size-options input{width:auto;margin:0}
+   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+   .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
+   .upload-box input{display:none}
+   .upload-box label{display:block;cursor:pointer;color:#007bff}
   </style>
 </head>
 <body>
@@ -56,11 +53,11 @@
 
 <div class="grid-2">
   <div>
-    <label>Diskon % (Opsional)</label>
+    <label>Diskon %</label>
     <input type="number" id="diskon" placeholder="20" min="0" max="90">
   </div>
   <div>
-    <label>Ongkir (Opsional)</label>
+    <label>Ongkir</label>
     <input type="number" id="ongkir" placeholder="15000" min="0">
   </div>
 </div>
@@ -88,7 +85,7 @@
 <div class="upload-box">
   <input type="file" id="gambarUpload" accept="image/*" multiple>
   <label for="gambarUpload">📷 Pilih Gambar</label>
-  <small>Max 4 gambar. Bisa pilih dari galeri HP</small>
+  <small>Max 4 gambar</small>
 </div>
 <div id="preview"></div>
 
@@ -114,7 +111,6 @@ const ukuranConfig = {
   'Skincare': []
 };
 
-// Ganti opsi ukuran sesuai kategori
 function ubahKategori(){
   const kat = document.getElementById('kategori').value;
   const sizeWrap = document.getElementById('sizeWrap');
@@ -129,26 +125,17 @@ function ubahKategori(){
   } else {
     sizeWrap.style.display = 'block';
     ukuranDetailWrap.style.display = (kat === 'Sepatu' || kat === 'Elektronik' || kat === 'Skincare')? 'none' : 'block';
-
     ukuranConfig[kat].forEach(u => {
-      sizeOptions.innerHTML += `
-        <label><input type="checkbox" value="${u}" ${['M','L','XL','36','37','38','39','40'].includes(u)?'checked':''}> ${u}</label>
-      `;
+      sizeOptions.innerHTML += `<label><input type="checkbox" value="${u}" ${['M','L','XL','36','37','38','39','40'].includes(u)?'checked':''}> ${u}</label>`;
     });
   }
 }
 
-// Upload gambar ke base64
 document.getElementById('gambarUpload').onchange = e => {
   const files = e.target.files;
   gambarBase64 = [];
   document.getElementById('preview').innerHTML = '';
-
-  if(files.length > 4){
-    alert('Max 4 gambar');
-    return;
-  }
-
+  if(files.length > 4){alert('Max 4 gambar');return;}
   Array.from(files).forEach(file => {
     const reader = new FileReader();
     reader.onload = e => {
@@ -159,13 +146,10 @@ document.getElementById('gambarUpload').onchange = e => {
   });
 };
 
-// Ambil ukuran yang dicentang
 function getUkuranDipilih(){
-  let checkboxes = document.querySelectorAll('.size-options input:checked');
-  return Array.from(checkboxes).map(cb => cb.value);
+  return Array.from(document.querySelectorAll('.size-options input:checked')).map(cb => cb.value);
 }
 
-// Simpan produk
 document.getElementById('btnSubmit').onclick = () => {
   const nama = document.getElementById('namaProduk').value.trim();
   const harga = document.getElementById('hargaProduk').value.trim();
@@ -189,11 +173,7 @@ document.getElementById('btnSubmit').onclick = () => {
 
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
   produk.push({
-    nama,
-    harga,
-    kategori,
-    gambar: gambarBase64,
-    ukuran: ukuran.length > 0? ukuran : [],
+    nama,harga,kategori,gambar:gambarBase64,ukuran,
     diskon: diskon? parseInt(diskon) : 0,
     ongkir: ongkir? parseInt(ongkir) : 0,
     bahan: bahan || "Tidak disebutkan",
@@ -202,13 +182,11 @@ document.getElementById('btnSubmit').onclick = () => {
   });
 
   localStorage.setItem('produk', JSON.stringify(produk));
-
   document.getElementById('status').innerText = '✅ Produk berhasil disimpan!';
   resetForm();
   tampilkanProduk();
 };
 
-// Reset form
 function resetForm(){
   document.getElementById('namaProduk').value = '';
   document.getElementById('hargaProduk').value = '';
@@ -223,11 +201,9 @@ function resetForm(){
   ubahKategori();
 }
 
-// Tampilkan produk
 function tampilkanProduk() {
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
   let html = '';
-
   produk.forEach((p, i) => {
     html += `<div class="produk-item">
       <strong>${p.nama}</strong><br>
@@ -236,39 +212,31 @@ function tampilkanProduk() {
       ${p.diskon > 0? `<span style="color:red"> -${p.diskon}%</span>` : ''}<br>
       ${p.ukuran.length > 0? `<div class="info-extra">Ukuran: ${p.ukuran.join(', ')}</div>` : ''}
       ${p.bahan? `<div class="info-extra">🧵 Bahan: ${p.bahan}</div>` : ''}
-      ${p.ukuranDetail? `<div class="info-extra">📏 ${p.ukuranDetail}</div>` : ''}
-      ${p.ongkir > 0? `<div class="info-extra">🚚 Ongkir: Rp ${p.ongkir.toLocaleString('id-ID')}</div>` : ''}
       <div style="display:flex;gap:5px;margin-top:8px">
         ${p.gambar.slice(0,3).map(g => `<img src="${g}">`).join('')}
       </div>
       <button class="btn-hapus" onclick="hapusProduk(${i})">Hapus</button>
     </div>`;
   });
-
   document.getElementById('daftarProduk').innerHTML = html || '<p>Belum ada produk</p>';
 }
 
-// Hapus 1 produk
 function hapusProduk(index){
   if(confirm('Hapus produk ini?')){
     let produk = JSON.parse(localStorage.getItem('produk')) || [];
     produk.splice(index, 1);
     localStorage.setItem('produk', JSON.stringify(produk));
     tampilkanProduk();
-    document.getElementById('status').innerText = 'Produk dihapus';
   }
 }
 
-// Hapus semua
 document.getElementById('btnHapusSemua').onclick = () => {
-  if(confirm('Hapus semua produk? Data tidak bisa dikembalikan!')){
+  if(confirm('Hapus semua produk?')){
     localStorage.removeItem('produk');
     tampilkanProduk();
-    document.getElementById('status').innerText = 'Semua produk dihapus';
   }
 };
 
-// Init
 ubahKategori();
 tampilkanProduk();
 </script>
