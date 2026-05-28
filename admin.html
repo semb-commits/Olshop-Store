@@ -15,20 +15,20 @@
     #preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     #preview img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
     #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
-   .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
-   .produk-item img{width:60px;height:60px;object-fit:cover;margin-right:5px;border-radius:4px}
-   .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
-   .info-extra{font-size:12px;color:#666;margin-top:4px}
+  .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
+  .produk-item img{width:60px;height:60px;object-fit:cover;margin-right:5px;border-radius:4px}
+  .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
+  .info-extra{font-size:12px;color:#666;margin-top:4px}
 
-   .size-wrap{margin-top:10px;display:none}
-   .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-   .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
-   .size-options input{width:auto;margin:0}
+  .size-wrap{margin-top:10px;display:none}
+  .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+  .size-options input{width:auto;margin:0}
 
-   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-   .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
-   .upload-box input{display:none}
-   .upload-box label{display:block;cursor:pointer;color:#007bff}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
+  .upload-box input{display:none}
+  .upload-box label{display:block;cursor:pointer;color:#007bff}
   </style>
 </head>
 <body>
@@ -65,17 +65,6 @@
   </div>
 </div>
 
-<div class="grid-2">
-  <div>
-    <label>Rating (Opsional)</label>
-    <input type="number" id="rating" placeholder="4.8" step="0.1" min="0" max="5">
-  </div>
-  <div>
-    <label>Terjual (Opsional)</label>
-    <input type="number" id="terjual" placeholder="150" min="0">
-  </div>
-</div>
-
 <label>Deskripsi Produk</label>
 <textarea id="deskripsi" placeholder="Deskripsi produk..."></textarea>
 
@@ -84,7 +73,7 @@
     <label>Bahan/Material</label>
     <input type="text" id="bahan" placeholder="Contoh: Katun 100%">
   </div>
-  <div id="ukuranDadaWrap">
+  <div id="ukuranDetailWrap">
     <label>Ukuran Detail</label>
     <input type="text" id="ukuranDetail" placeholder="Contoh: M=98cm, L=104cm">
   </div>
@@ -130,16 +119,16 @@ function ubahKategori(){
   const kat = document.getElementById('kategori').value;
   const sizeWrap = document.getElementById('sizeWrap');
   const sizeOptions = document.getElementById('sizeOptions');
-  const ukuranDadaWrap = document.getElementById('ukuranDadaWrap');
+  const ukuranDetailWrap = document.getElementById('ukuranDetailWrap');
 
   sizeOptions.innerHTML = '';
 
   if(ukuranConfig[kat].length === 0){
     sizeWrap.style.display = 'none';
-    ukuranDadaWrap.style.display = 'none';
+    ukuranDetailWrap.style.display = 'none';
   } else {
     sizeWrap.style.display = 'block';
-    ukuranDadaWrap.style.display = kat === 'Sepatu' || kat === 'Elektronik' || kat === 'Skincare'? 'none' : 'block';
+    ukuranDetailWrap.style.display = (kat === 'Sepatu' || kat === 'Elektronik' || kat === 'Skincare')? 'none' : 'block';
 
     ukuranConfig[kat].forEach(u => {
       sizeOptions.innerHTML += `
@@ -183,8 +172,6 @@ document.getElementById('btnSubmit').onclick = () => {
   const kategori = document.getElementById('kategori').value;
   const diskon = document.getElementById('diskon').value.trim();
   const ongkir = document.getElementById('ongkir').value.trim();
-  const rating = document.getElementById('rating').value.trim();
-  const terjual = document.getElementById('terjual').value.trim();
   const deskripsi = document.getElementById('deskripsi').value.trim();
   const bahan = document.getElementById('bahan').value.trim();
   const ukuranDetail = document.getElementById('ukuranDetail').value.trim();
@@ -209,8 +196,6 @@ document.getElementById('btnSubmit').onclick = () => {
     ukuran: ukuran.length > 0? ukuran : [],
     diskon: diskon? parseInt(diskon) : 0,
     ongkir: ongkir? parseInt(ongkir) : 0,
-    rating: rating? parseFloat(rating) : 4.8,
-    terjual: terjual? parseInt(terjual) : Math.floor(Math.random() * 500) + 50,
     bahan: bahan || "Tidak disebutkan",
     ukuranDetail: ukuranDetail || "",
     deskripsi: deskripsi || "Produk original, kualitas terjamin."
@@ -229,8 +214,6 @@ function resetForm(){
   document.getElementById('hargaProduk').value = '';
   document.getElementById('diskon').value = '';
   document.getElementById('ongkir').value = '';
-  document.getElementById('rating').value = '';
-  document.getElementById('terjual').value = '';
   document.getElementById('deskripsi').value = '';
   document.getElementById('bahan').value = '';
   document.getElementById('ukuranDetail').value = '';
@@ -251,7 +234,6 @@ function tampilkanProduk() {
       <small style="color:#666">${p.kategori}</small><br>
       Rp ${parseInt(p.harga).toLocaleString('id-ID')}
       ${p.diskon > 0? `<span style="color:red"> -${p.diskon}%</span>` : ''}<br>
-      <div class="info-extra">⭐ ${p.rating} | Terjual ${p.terjual}+</div>
       ${p.ukuran.length > 0? `<div class="info-extra">Ukuran: ${p.ukuran.join(', ')}</div>` : ''}
       ${p.bahan? `<div class="info-extra">🧵 Bahan: ${p.bahan}</div>` : ''}
       ${p.ukuranDetail? `<div class="info-extra">📏 ${p.ukuranDetail}</div>` : ''}
@@ -291,4 +273,4 @@ ubahKategori();
 tampilkanProduk();
 </script>
 </body>
-    </html>
+  </html>
