@@ -3,65 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="icon" type="image/png" href="favicon.png">
   <meta name="google-site-verification" content="ctLb4NTy167TKH-eNXjgJjLugB1RU2inZ72iN-VXt9c" />
-
   <title>Olshopintar Store</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:Arial,sans-serif;background:#f8f9fa}
     header{background:#007bff;color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
     header h1{font-size:22px;margin-bottom:5px}
-   .user-box{display:flex;align-items:center;gap:10px}
-   .user-box img{width:32px;height:32px;border-radius:50%}
-   .user-box button{background:white;color:#007bff;border:none;padding:6px 12px;border-radius:6px;font-weight:bold;cursor:pointer}
-.sticky-wrap{position:sticky;top:0;background:#f8f9fa;padding:15px 15px 5px;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
-.container{padding:0 15px 15px;max-width:900px;margin:auto}
-.search-box{margin-bottom:12px}
-.search-box input{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
-.filter{display:flex;gap:8px;overflow-x:auto;margin-bottom:15px;padding-bottom:5px}
-.filter button{flex-shrink:0;padding:8px 14px;border:none;border-radius:20px;background:#e9ecef;font-size:13px;cursor:pointer}
-.filter button.active{background:#007bff;color:white}
-.produk{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.card{background:white;border-radius:12px;padding:8px;box-shadow:0 2px 6px rgba(0,0,0,0.08);display:flex;flex-direction:column;position:relative}
-.badge-diskon{position:absolute;top:8px;left:8px;background:#ff4757;color:white;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:bold;z-index:2}
-.card img{width:100%;aspect-ratio:4/5;object-fit:contain;background:#f1f1f1;border-radius:8px;cursor:pointer}
-.kategori{font-size:11px;color:#666;margin-top:4px;text-transform:uppercase}
-.nama{font-weight:bold;margin-top:4px;font-size:14px;flex-grow:1;cursor:pointer}
-.harga{color:#ff4757;font-weight:bold;margin-top:4px;font-size:15px}
-.harga-asli{font-size:12px;color:#999;text-decoration:line-through;margin-left:5px}
-.btn-wa{display:block;background:#25D366;color:white;text-align:center;padding:9px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold;font-size:14px}
-.kosong{text-align:center;color:#666;margin-top:50px;font-size:16px}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:999}
-.modal-content{background:white;padding:20px;border-radius:10px;width:90%;max-width:400px;max-height:90vh;overflow-y:auto}
-.modal-content input,.modal-content textarea,.modal-content select,.modal-content button{width:100%;padding:12px;margin:8px 0;border-radius:6px;border:1px solid #ccc;font-size:14px}
-.modal-content textarea{resize:none;height:70px}
-.modal-content button{background:#25D366;color:white;border:none;font-weight:bold}
-.close{float:right;font-size:24px;cursor:pointer}
-.detail-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;overflow-y:auto}
-.detail-content{background:white;max-width:600px;margin:20px auto;border-radius:12px;overflow:hidden}
-.slider-wrap{position:relative;background:#000}
-.slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-.slider::-webkit-scrollbar{display:none}
-.slider img{flex-shrink:0;width:100%;height:350px;object-fit:contain;background:#000;scroll-snap-align:start}
-.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;z-index:2}
-.slider-btn.prev{left:10px}
-.slider-btn.next{right:10px}
-.slider-dots{display:flex;justify-content:center;gap:6px;padding:10px;background:#000}
-.slider-dots span{width:8px;height:8px;border-radius:50%;background:#555;}
-.slider-dots span.active{background:white;}
-.detail-info{padding:20px}
-.detail-info h2{font-size:20px;margin-bottom:10px}
-.detail-price{font-size:24px;color:#ff4757;font-weight:bold;margin:10px 0}
-.detail-desc{color:#666;line-height:1.6;margin:15px 0}
-.size-wrap{margin:15px 0;display:none}
-.size-options{display:flex;gap:8px;flex-wrap:wrap}
-.size-options button{padding:8px 16px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer}
-.size-options button.active{background:#007bff;color:white;border-color:#007bff}
-.qty-wrap{display:flex;align-items:center;gap:10px;margin:15px 0}
-.qty-wrap button{width:35px;height:35px;border:1px solid #ddd;background:white;font-size:18px;border-radius:6px;cursor:pointer}
-.qty-wrap input{width:60px;text-align:center;padding:8px}
+  .user-box{display:flex;align-items:center;gap:10px}
+  .user-box img{width:32px;height:32px;border-radius:50%}
+  .user-box button{background:white;color:#007bff;border:none;padding:6px 12px;border-radius:6px;font-weight:bold;cursor:pointer}
+  .sticky-wrap{position:sticky;top:0;background:#f8f9fa;padding:15px 15px 5px;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
+  .container{padding:0 15px 15px;max-width:900px;margin:auto}
+  .search-box{margin-bottom:12px}
+  .search-box input{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
+  .filter{display:flex;gap:8px;overflow-x:auto;margin-bottom:15px;padding-bottom:5px}
+  .filter button{flex-shrink:0;padding:8px 14px;border:none;border-radius:20px;background:#e9ecef;font-size:13px;cursor:pointer}
+  .filter button.active{background:#007bff;color:white}
+  .produk{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .card{background:white;border-radius:12px;padding:8px;box-shadow:0 2px 6px rgba(0,0,0,0.08);display:flex;flex-direction:column;position:relative}
+  .badge-diskon{position:absolute;top:8px;left:8px;background:#ff4757;color:white;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:bold;z-index:2}
+  .card img{width:100%;aspect-ratio:4/5;object-fit:contain;background:#f1f1f1;border-radius:8px;cursor:pointer}
+  .kategori{font-size:11px;color:#666;margin-top:4px;text-transform:uppercase}
+  .nama{font-weight:bold;margin-top:4px;font-size:14px;flex-grow:1;cursor:pointer}
+  .harga{color:#ff4757;font-weight:bold;margin-top:4px;font-size:15px}
+  .harga-asli{font-size:12px;color:#999;text-decoration:line-through;margin-left:5px}
+  .btn-wa{display:block;background:#25D366;color:white;text-align:center;padding:9px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold;font-size:14px}
+  .kosong{text-align:center;color:#666;margin-top:50px;font-size:16px}
+  .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:999}
+  .modal-content{background:white;padding:20px;border-radius:10px;width:90%;max-width:400px;max-height:90vh;overflow-y:auto}
+  .modal-content input,.modal-content textarea,.modal-content select,.modal-content button{width:100%;padding:12px;margin:8px 0;border-radius:6px;border:1px solid #ccc;font-size:14px}
+  .modal-content textarea{resize:none;height:70px}
+  .modal-content button{background:#25D366;color:white;border:none;font-weight:bold}
+  .close{float:right;font-size:24px;cursor:pointer}
+  .detail-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;overflow-y:auto}
+  .detail-content{background:white;max-width:600px;margin:20px auto;border-radius:12px;overflow:hidden}
+  .slider-wrap{position:relative;background:#000}
+  .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .slider::-webkit-scrollbar{display:none}
+  .slider img{flex-shrink:0;width:100%;height:350px;object-fit:contain;background:#000;scroll-snap-align:start}
+  .slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;z-index:2}
+  .slider-btn.prev{left:10px}
+  .slider-btn.next{right:10px}
+  .slider-dots{display:flex;justify-content:center;gap:6px;padding:10px;background:#000}
+  .slider-dots span{width:8px;height:8px;border-radius:50%;background:#555;}
+  .slider-dots span.active{background:white;}
+  .detail-info{padding:20px}
+  .detail-info h2{font-size:20px;margin-bottom:10px}
+  .detail-price{font-size:24px;color:#ff4757;font-weight:bold;margin:10px 0}
+  .detail-desc{color:#666;line-height:1.6;margin:15px 0}
+  .size-wrap{margin:15px 0;display:none}
+  .size-options{display:flex;gap:8px;flex-wrap:wrap}
+  .size-options button{padding:8px 16px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer}
+  .size-options button.active{background:#007bff;color:white;border-color:#007bff}
+  .qty-wrap{display:flex;align-items:center;gap:10px;margin:15px 0}
+  .qty-wrap button{width:35px;height:35px;border:1px solid #ddd;background:white;font-size:18px;border-radius:6px;cursor:pointer}
+  .qty-wrap input{width:60px;text-align:center;padding:8px}
     footer{background:#222;color:#ccc;text-align:center;padding:25px 15px;margin-top:40px;font-size:14px}
     footer h4{color:white;margin-bottom:8px}
     footer p{margin:4px 0}
@@ -101,7 +99,7 @@
 
 <div class="container">
   <div id="daftarProduk" class="produk"></div>
-  <div id="kosong" class="kosong">Belum ada produk. Tambahkan lewat halaman admin.</div>
+  <div id="kosong" class="kosong">Belum ada produk.</div>
 </div>
 
 <div id="detailModal" class="detail-modal" onclick="tutupDetail()">
@@ -137,7 +135,7 @@
   <div class="modal-content">
     <span class="close" onclick="tutupModal()">&times;</span>
     <h3>Detail Pesanan</h3>
-    <input type="text" id="namaPembeli" placeholder="Nama Lengkap" required>
+    <input type="text" id="namaPembeli" placeholder="Nama Lengkap" required readonly>
     <input type="tel" id="waPembeli" placeholder="Nomor WhatsApp Aktif" required>
     <textarea id="alamatPembeli" placeholder="Alamat Lengkap" required></textarea>
     <div style="display:flex; gap:8px;">
@@ -164,26 +162,42 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+// Config Firebase - tetep butuh buat Auth
 const firebaseConfig = {
   apiKey: "AIzaSyANsON6_quuTxVk5P2jt43skLHjhhpO33M",
   authDomain: "olshopin-25ef6.firebaseapp.com",
-  databaseURL: "https://olshopin-25ef6-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "olshopin-25ef6",
-  storageBucket: "olshopin-25ef6.firebasestorage.app",
-  messagingSenderId: "265129669",
-  appId: "1:265129669:web:1c3b45bddd491af17562ac",
-  measurementId: "G-LBW18DESDC"
+  appId: "1:265129669:web:1c3b45bddd491af17562ac"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-let produkList = [];
+// Data produk lu hardcode aja di sini kalau nggak pakai database
+const produkList = [
+  {
+    id: "1",
+    nama: "Kaos Polos Hitam",
+    harga: 50000,
+    kategori: "Kaos",
+    gambar: ["https://via.placeholder.com/400x500"],
+    deskripsi: "Kaos cotton combed 24s",
+    ukuran: ["M", "L", "XL"]
+  },
+  {
+    id: "2",
+    nama: "Kemeja Flanel",
+    harga: 120000,
+    kategori: "Kemeja",
+    gambar: ["https://via.placeholder.com/400x500"],
+    deskripsi: "Kemeja flanel premium",
+    ukuran: ["L", "XL"]
+  }
+];
+
 let produkPilihan = null;
 let kategoriAktif = 'Semua';
 let ukuranPilihan = '';
@@ -208,23 +222,14 @@ onAuthStateChanged(auth, (user) => {
 
 window.loginWithGoogle = () => {
   signInWithPopup(auth, provider)
-   .catch(err => alert("Login gagal: " + err.message));
+  .catch(err => alert("Login gagal: " + err.message));
 }
 
 window.logout = () => {
   signOut(auth);
 }
 
-// Ambil data dari Firebase secara realtime
-const produkRef = ref(db, 'produk');
-onValue(produkRef, (snapshot) => {
-  produkList = [];
-  snapshot.forEach((child) => {
-    produkList.push({id: child.key,...child.val()});
-  });
-  tampilkanProduk();
-});
-
+// Tampilkan produk dari array hardcode
 window.tampilkanProduk = function() {
   let search = document.getElementById('searchInput').value.toLowerCase();
   let container = document.getElementById('daftarProduk');
@@ -245,24 +250,36 @@ window.tampilkanProduk = function() {
   kosong.style.display = 'none';
   container.innerHTML = '';
 
-  produk.forEach((p, i) => {
-    let diskon = p.diskon || 0;
-    let hargaAsli = diskon > 0? Math.round(p.harga / (1 - diskon/100)) : 0;
-
+  produk.forEach((p) => {
     container.innerHTML += `
       <div class="card">
-        ${diskon > 0? `<div class="badge-diskon">Diskon ${diskon}%</div>` : ''}
-        <img src="${p.gambar[0]}" alt="${p.nama}" onclick="bukaDetail('${p.id}')" onerror="this.src='https://via.placeholder.com/400x500?text=No+Image'">
+        <img src="${p.gambar[0]}" alt="${p.nama}" onclick="bukaDetail('${p.id}')">
         <div class="kategori">${p.kategori}</div>
         <div class="nama" onclick="bukaDetail('${p.id}')">${p.nama}</div>
-        <div class="harga">
-          Rp ${parseInt(p.harga).toLocaleString('id-ID')}
-          ${diskon > 0? `<span class="harga-asli">Rp ${hargaAsli.toLocaleString('id-ID')}</span>` : ''}
-        </div>
+        <div class="harga">Rp ${parseInt(p.harga).toLocaleString('id-ID')}</div>
         <a href="#" class="btn-wa" onclick="bukaModal('${p.id}'); event.stopPropagation()">Beli via WhatsApp</a>
       </div>
     `;
   });
+}
+
+// Wajib login dulu sebelum beli
+window.bukaModal = function(id){
+  const user = auth.currentUser;
+
+  if(!user){
+    alert("Login dulu ya buat bisa beli!");
+    loginWithGoogle();
+    return;
+  }
+
+  produkPilihan = produkList.find(p => p.id === id);
+  if(!produkPilihan) return;
+
+  // Auto isi nama dari akun Google
+  document.getElementById('namaPembeli').value = user.displayName || '';
+
+  document.getElementById('modal').style.display = 'flex';
 }
 
 window.bukaDetail = function(id){
@@ -274,7 +291,7 @@ window.bukaDetail = function(id){
   qtyPilihan = 1;
   slideIndex = 0;
 
-  let showSize = p.ukuran && p.ukuran.length > 0 && p.kategori!== 'Skincare' && p.kategori!== 'Elektronik';
+  let showSize = p.ukuran && p.ukuran.length > 0;
   document.getElementById('sizeWrap').style.display = showSize? 'block' : 'none';
 
   if(showSize){
@@ -286,25 +303,12 @@ window.bukaDetail = function(id){
   }
 
   let slider = document.getElementById('detailSlider');
-  let dots = document.getElementById('sliderDots');
-  slider.innerHTML = '';
-  dots.innerHTML = '';
-
-  p.gambar.forEach((g, i) => {
-    slider.innerHTML += `<img src="${g}" onerror="this.style.display='none'">`;
-    dots.innerHTML += `<span class="${i==0?'active':''}"></span>`;
-  });
+  slider.innerHTML = `<img src="${p.gambar[0]}">`;
 
   document.getElementById('detailKategori').textContent = p.kategori;
   document.getElementById('detailNama').textContent = p.nama;
-  document.getElementById('detailDesc').textContent = p.deskripsi || 'Produk original, kualitas terjamin.';
-
-  let diskon = p.diskon || 0;
-  let hargaAsli = diskon > 0? Math.round(p.harga / (1 - diskon/100)) : 0;
-  document.getElementById('detailHarga').innerHTML = `
-    Rp ${parseInt(p.harga).toLocaleString('id-ID')}
-    ${diskon > 0? `<span style="font-size:16px; color:#999; text-decoration:line-through; margin-left:10px;">Rp ${hargaAsli.toLocaleString('id-ID')}</span>` : ''}
-  `;
+  document.getElementById('detailDesc').textContent = p.deskripsi || '';
+  document.getElementById('detailHarga').textContent = `Rp ${parseInt(p.harga).toLocaleString('id-ID')}`;
 
   document.getElementById('qtyInput').value = 1;
   document.getElementById('detailBtnWA').onclick = () => {
@@ -312,34 +316,11 @@ window.bukaDetail = function(id){
     bukaModal(id);
   };
   document.getElementById('detailModal').style.display = 'block';
-
-  slider.onscroll = () => {
-    let idx = Math.round(slider.scrollLeft / slider.offsetWidth);
-    updateDots(idx);
-  };
 }
 
-window.slideNext = function(){
-  let slider = document.getElementById('detailSlider');
-  slideIndex = Math.min(slideIndex + 1, slider.children.length - 1);
-  slider.scrollTo({left: slideIndex * slider.offsetWidth, behavior:'smooth'});
-  updateDots(slideIndex);
-}
-
-window.slidePrev = function(){
-  let slider = document.getElementById('detailSlider');
-  slideIndex = Math.max(slideIndex - 1, 0);
-  slider.scrollTo({left: slideIndex * slider.offsetWidth, behavior:'smooth'});
-  updateDots(slideIndex);
-}
-
-window.updateDots = function(index){
-  slideIndex = index;
-  document.querySelectorAll('#sliderDots span').forEach((dot,i)=>{
-    dot.classList.toggle('active', i==index);
-  });
-}
-
+window.slideNext = function(){}
+window.slidePrev = function(){}
+window.updateDots = function(index){}
 window.tutupDetail = function(){document.getElementById('detailModal').style.display = 'none';}
 window.pilihUkuran = function(size){ukuranPilihan = size;document.querySelectorAll('#sizeOptions button').forEach(btn => {btn.classList.remove('active');if(btn.textContent === size) btn.classList.add('active');});}
 window.tambahQty = function(){qtyPilihan++;document.getElementById('qtyInput').value = qtyPilihan;}
@@ -352,12 +333,6 @@ window.filterKategori = function(kategori){
     if(btn.textContent === kategori) btn.classList.add('active');
   });
   tampilkanProduk();
-}
-
-window.bukaModal = function(id){
-  produkPilihan = produkList.find(p => p.id === id);
-  if(!produkPilihan) return;
-  document.getElementById('modal').style.display = 'flex';
 }
 
 window.tutupModal = function(){
@@ -387,12 +362,13 @@ window.kirimWA = function(){
   let totalHarga = produkPilihan.harga * qtyPilihan;
   let pesan = `Halo, saya mau pesan:%0A
 *Nama:* ${nama}%0A
+*Email:* ${auth.currentUser.email}%0A
 *No WA:* ${wa}%0A
 *Alamat:* ${alamat}%0A
 *RT/RW:* ${rt}/${rw}%0A
 *Kode Pos:* ${kodepos}%0A
 *Produk:* ${produkPilihan.nama}%0A
-${(produkPilihan.ukuran && produkPilihan.ukuran.length > 0)? `*Ukuran:* ${ukuranPilihan}%0A` : ''}
+${ukuranPilihan? `*Ukuran:* ${ukuranPilihan}%0A` : ''}
 *Jumlah:* ${qtyPilihan} pcs%0A
 *Harga:* Rp ${parseInt(totalHarga).toLocaleString('id-ID')}%0A
 *Pembayaran:* ${metode}%0A%0A
@@ -401,6 +377,9 @@ Mohon diproses ya, terima kasih.`;
   window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
   tutupModal();
 }
+
+// Load produk pertama kali
+tampilkanProduk();
 </script>
 </body>
-        </html>
+      </html>
