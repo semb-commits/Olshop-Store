@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Produk</title>
 
-  <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2563eb">
 
@@ -20,28 +19,28 @@
     #preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     #preview img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
     #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
-  .produk-item{border:1px solid #ddd;padding:12px;margin-top:12px;border-radius:8px;background:white}
-  .produk-header{display:flex;gap:10px;align-items:flex-start}
-  .produk-header img{width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0}
-  .produk-info{flex:1}
-  .produk-info strong{font-size:15px}
-  .produk-info small{color:#666}
-  .info-extra{font-size:12px;color:#666;margin-top:4px}
-  .btn-group{display:flex;gap:8px;margin-top:10px}
-  .btn-edit{background:#ffc107;color:#000;padding:6px 12px;font-size:13px;width:auto}
-  .btn-delete{background:#dc3545;padding:6px 12px;font-size:13px;width:auto}
-  .size-wrap{margin-top:10px;display:none}
-  .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-  .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
-  .size-options input{width:auto;margin:0}
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
-  .upload-box input{display:none}
-  .upload-box label{display:block;cursor:pointer;color:#007bff}
-  .edit-mode{background:#fff3cd;border:2px solid #ffc107}
+   .produk-item{border:1px solid #ddd;padding:12px;margin-top:12px;border-radius:8px;background:white}
+   .produk-header{display:flex;gap:10px;align-items:flex-start}
+   .produk-header img{width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0}
+   .produk-info{flex:1}
+   .produk-info strong{font-size:15px}
+   .produk-info small{color:#666}
+   .btn-group{display:flex;gap:8px;margin-top:10px}
+   .btn-edit{background:#ffc107;color:#000;padding:6px 12px;font-size:13px;width:auto}
+   .btn-delete{background:#dc3545;padding:6px 12px;font-size:13px;width:auto}
+   .size-wrap{margin-top:10px;display:none}
+   .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+   .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+   .size-options input{width:auto;margin:0}
+   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+   .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
+   .upload-box input{display:none}
+   .upload-box label{display:block;cursor:pointer;color:#007bff}
+   .edit-mode{background:#fff3cd;border:2px solid #ffc107}
     #loginBox{position:fixed;top:0;left:0;width:100%;height:100%;background:#f8f9fa;display:flex;justify-content:center;align-items:center;z-index:9999}
-    #loginBox.box{background:white;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);width:90%;max-width:350px}
+    #loginBox.box{background:white;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);width:90%;max-width:350px;text-align:center}
     #mainContent{display:none}
+   .google-btn{background:#4285f4;display:flex;align-items:center;justify-content:center;gap:10px}
   </style>
 </head>
 <body>
@@ -49,9 +48,12 @@
 <div id="loginBox">
   <div class="box">
     <h3>🔒 Login Admin</h3>
-    <input type="password" id="passwordInput" placeholder="Masukkan password">
-    <button onclick="cekPassword()">Masuk</button>
-    <p id="loginError" style="color:red;text-align:center;margin-top:10px;display:none">Password salah!</p>
+    <p style="color:#666;font-size:14px">Login pakai akun Google yang terdaftar</p>
+    <button class="google-btn" onclick="loginWithGoogle()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#FFF" d="M17.64 9.2c0-.637-.057-1.25-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#FFF" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/><path fill="#FFF" d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#FFF" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+      Login dengan Google
+    </button>
+    <p id="loginError" style="color:red;text-align:center;margin-top:10px;display:none"></p>
   </div>
 </div>
 
@@ -129,6 +131,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getDatabase, ref, push, remove, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -142,36 +145,43 @@ const firebaseConfig = {
   measurementId: "G-LBW18DESDC"
 };
 
+// GANTI INI PAKE EMAIL GOOGLE LU
+const ADMIN_EMAIL = "email-lu@gmail.com";
+
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getDatabase(app);
+const provider = new GoogleAuthProvider();
 const produkRef = ref(db, 'produk');
 
-const ADMIN_PASSWORD = "admin12345";
 let gambarBase64 = [];
 let produkList = [];
 
-window.cekPassword = function() {
-  const input = document.getElementById('passwordInput').value;
-  if(input === ADMIN_PASSWORD) {
-    sessionStorage.setItem('adminLoggedIn', 'true');
-    document.getElementById('loginBox').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
+const loginBox = document.getElementById('loginBox');
+const mainContent = document.getElementById('mainContent');
+
+onAuthStateChanged(auth, (user) => {
+  if(user && user.email === ADMIN_EMAIL){
+    loginBox.style.display = 'none';
+    mainContent.style.display = 'block';
     initApp();
-  } else {
+  } else if(user){
+    document.getElementById('loginError').textContent = "Email " + user.email + " bukan admin!";
+    document.getElementById('loginError').style.display = 'block';
+    signOut(auth);
+  }
+});
+
+window.loginWithGoogle = async () => {
+  try {
+    await signInWithPopup(auth, provider);
+  } catch(err) {
+    document.getElementById('loginError').textContent = "Login gagal: " + err.message;
     document.getElementById('loginError').style.display = 'block';
   }
 }
 
-window.logout = function() {
-  sessionStorage.removeItem('adminLoggedIn');
-  location.reload();
-}
-
-if(sessionStorage.getItem('adminLoggedIn') === 'true') {
-  document.getElementById('loginBox').style.display = 'none';
-  document.getElementById('mainContent').style.display = 'block';
-  initApp();
-}
+window.logout = () => signOut(auth);
 
 function initApp() {
   const ukuranConfig = {
@@ -369,13 +379,5 @@ function initApp() {
   ubahKategori();
 }
 </script>
-
-<!-- PWA Service Worker Registration -->
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
-}
-</script>
-
 </body>
-  </html>
+      </html>
