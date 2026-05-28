@@ -3,27 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tambah Produk</title>
+  <title>Admin Produk</title>
   <style>
-    body{font-family:Arial,sans-serif;padding:20px;max-width:400px;margin:auto;background:#f8f9fa}
-    h3{text-align:center;margin-bottom:20px}
+    body{font-family:Arial,sans-serif;padding:15px;max-width:600px;margin:auto;background:#f8f9fa}
+    h3{text-align:center;margin-bottom:15px}
     label{font-weight:bold;font-size:14px;display:block;margin-top:10px}
     input,select,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box;border:1px solid #ccc;border-radius:6px;font-size:15px}
     textarea{resize:none;height:80px}
     button{background:#007bff;color:white;border:none;font-weight:bold;cursor:pointer}
-    #preview{max-width:100%;margin-top:10px;border-radius:8px;display:none}
+    button:disabled{background:#aaa;cursor:not-allowed}
+    #preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    #preview img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
     #status{margin-top:10px;font-weight:bold;text-align:center;color:green}
-    .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
-    .produk-item img{max-width:80px;margin-right:5px;border-radius:4px}
-    .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
-    .info-extra{font-size:12px;color:#666;margin-top:4px}
-    
-    .size-wrap{margin-top:10px}
-    .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-    .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
-    .size-options input{width:auto;margin:0}
-    
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+   .produk-item{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:white}
+   .produk-item img{width:60px;height:60px;object-fit:cover;margin-right:5px;border-radius:4px}
+   .btn-hapus{width:auto;padding:6px 12px;background:#dc3545;font-size:13px;margin-top:8px}
+   .info-extra{font-size:12px;color:#666;margin-top:4px}
+
+   .size-wrap{margin-top:10px;display:none}
+   .size-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+   .size-options label{display:flex;align-items:center;gap:5px;font-weight:normal;font-size:14px}
+   .size-options input{width:auto;margin:0}
+
+   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+   .upload-box{border:2px dashed #ccc;padding:20px;text-align:center;border-radius:8px;background:#fff}
+   .upload-box input{display:none}
+   .upload-box label{display:block;cursor:pointer;color:#007bff}
   </style>
 </head>
 <body>
@@ -31,20 +36,22 @@
 <h3>Tambah Produk</h3>
 
 <label>Nama Produk</label>
-<input type="text" id="namaProduk" placeholder="Contoh: Kemeja Putih">
+<input type="text" id="namaProduk" placeholder="Contoh: Hoodie Polos Abu">
 
 <label>Harga</label>
-<input type="number" id="hargaProduk" placeholder="Contoh: 50000">
+<input type="number" id="hargaProduk" placeholder="Contoh: 200000">
 
 <label>Kategori</label>
-<select id="kategori">
-  <option value="Baju">Baju</option>
+<select id="kategori" onchange="ubahKategori()">
+  <option value="Kemeja">Kemeja</option>
+  <option value="Kaos">Kaos</option>
+  <option value="Hoodie">Hoodie</option>
   <option value="Celana">Celana</option>
-  <option value="Tas">Tas</option>
   <option value="Sepatu">Sepatu</option>
+  <option value="Elektronik">Elektronik</option>
   <option value="Skincare">Skincare</option>
+  <option value="Tas">Tas</option>
   <option value="Aksesoris">Aksesoris</option>
-  <option value="Lainnya">Lainnya</option>
 </select>
 
 <div class="grid-2">
@@ -69,38 +76,32 @@
   </div>
 </div>
 
-<label>Deskripsi Produk (Opsional)</label>
-<textarea id="deskripsi" placeholder="Contoh: Bahan katun 100%, adem dan nyaman dipakai sehari-hari"></textarea>
+<label>Deskripsi Produk</label>
+<textarea id="deskripsi" placeholder="Deskripsi produk..."></textarea>
 
 <div class="grid-2">
   <div>
-    <label>Lingkar Dada (Opsional)</label>
-    <input type="text" id="lingkarDada" placeholder="Contoh: M=98cm, L=104cm">
-  </div>
-  <div>
-    <label>Bahan (Opsional)</label>
+    <label>Bahan/Material</label>
     <input type="text" id="bahan" placeholder="Contoh: Katun 100%">
   </div>
-</div>
-
-<div class="size-wrap">
-  <label>Ukuran Tersedia:</label>
-  <div class="size-options">
-    <label><input type="checkbox" value="S"> S</label>
-    <label><input type="checkbox" value="M" checked> M</label>
-    <label><input type="checkbox" value="L" checked> L</label>
-    <label><input type="checkbox" value="XL" checked> XL</label>
-    <label><input type="checkbox" value="XXL"> XXL</label>
+  <div id="ukuranDadaWrap">
+    <label>Ukuran Detail</label>
+    <input type="text" id="ukuranDetail" placeholder="Contoh: M=98cm, L=104cm">
   </div>
 </div>
 
-<label>Link Gambar Produk</label>
-<input type="text" id="gambar1" placeholder="Tempel link gambar 1">
-<input type="text" id="gambar2" placeholder="Tempel link gambar 2">
-<input type="text" id="gambar3" placeholder="Tempel link gambar 3">
-<input type="text" id="gambar4" placeholder="Tempel link gambar 4">
+<div class="size-wrap" id="sizeWrap">
+  <label>Ukuran Tersedia:</label>
+  <div class="size-options" id="sizeOptions"></div>
+</div>
 
-<img id="preview">
+<label>Upload Gambar dari Galeri</label>
+<div class="upload-box">
+  <input type="file" id="gambarUpload" accept="image/*" multiple>
+  <label for="gambarUpload">📷 Pilih Gambar</label>
+  <small>Max 4 gambar. Bisa pilih dari galeri HP</small>
+</div>
+<div id="preview"></div>
 
 <button id="btnSubmit">Simpan Produk</button>
 <button id="btnHapusSemua" style="background:#dc3545">Hapus Semua Produk</button>
@@ -110,11 +111,63 @@
 <div id="daftarProduk"></div>
 
 <script>
-// Preview gambar pertama
-document.getElementById('gambar1').oninput = e => {
-  const url = e.target.value;
-  document.getElementById('preview').src = url;
-  document.getElementById('preview').style.display = url ? 'block' : 'none';
+let gambarBase64 = [];
+
+const ukuranConfig = {
+  'Sepatu': ['29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44'],
+  'Kemeja': ['S','M','L','XL','XXL'],
+  'Kaos': ['S','M','L','XL','XXL'],
+  'Hoodie': ['S','M','L','XL','XXL'],
+  'Celana': ['28','29','30','31','32','33','34','36'],
+  'Tas': ['S','M','L'],
+  'Aksesoris': ['S','M','L'],
+  'Elektronik': [],
+  'Skincare': []
+};
+
+// Ganti opsi ukuran sesuai kategori
+function ubahKategori(){
+  const kat = document.getElementById('kategori').value;
+  const sizeWrap = document.getElementById('sizeWrap');
+  const sizeOptions = document.getElementById('sizeOptions');
+  const ukuranDadaWrap = document.getElementById('ukuranDadaWrap');
+
+  sizeOptions.innerHTML = '';
+
+  if(ukuranConfig[kat].length === 0){
+    sizeWrap.style.display = 'none';
+    ukuranDadaWrap.style.display = 'none';
+  } else {
+    sizeWrap.style.display = 'block';
+    ukuranDadaWrap.style.display = kat === 'Sepatu' || kat === 'Elektronik' || kat === 'Skincare'? 'none' : 'block';
+
+    ukuranConfig[kat].forEach(u => {
+      sizeOptions.innerHTML += `
+        <label><input type="checkbox" value="${u}" ${['M','L','XL','36','37','38','39','40'].includes(u)?'checked':''}> ${u}</label>
+      `;
+    });
+  }
+}
+
+// Upload gambar ke base64
+document.getElementById('gambarUpload').onchange = e => {
+  const files = e.target.files;
+  gambarBase64 = [];
+  document.getElementById('preview').innerHTML = '';
+
+  if(files.length > 4){
+    alert('Max 4 gambar');
+    return;
+  }
+
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      gambarBase64.push(e.target.result);
+      document.getElementById('preview').innerHTML += `<img src="${e.target.result}">`;
+    };
+    reader.readAsDataURL(file);
+  });
 };
 
 // Ambil ukuran yang dicentang
@@ -133,42 +186,36 @@ document.getElementById('btnSubmit').onclick = () => {
   const rating = document.getElementById('rating').value.trim();
   const terjual = document.getElementById('terjual').value.trim();
   const deskripsi = document.getElementById('deskripsi').value.trim();
-  const lingkarDada = document.getElementById('lingkarDada').value.trim();
   const bahan = document.getElementById('bahan').value.trim();
+  const ukuranDetail = document.getElementById('ukuranDetail').value.trim();
   const ukuran = getUkuranDipilih();
-  
-  const gambar = [
-    document.getElementById('gambar1').value.trim(),
-    document.getElementById('gambar2').value.trim(),
-    document.getElementById('gambar3').value.trim(),
-    document.getElementById('gambar4').value.trim()
-  ].filter(url => url !== '');
 
-  if (!nama || !harga || gambar.length === 0) {
-    alert('Isi nama, harga, dan minimal 1 link gambar');
+  if (!nama ||!harga || gambarBase64.length === 0) {
+    alert('Isi nama, harga, dan upload minimal 1 gambar');
     return;
   }
 
-  if(ukuran.length === 0){
+  if(ukuranConfig[kategori].length > 0 && ukuran.length === 0){
     alert('Pilih minimal 1 ukuran');
     return;
   }
 
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
   produk.push({
-    nama, 
-    harga, 
-    kategori, 
-    gambar,
-    ukuran,
+    nama,
+    harga,
+    kategori,
+    gambar: gambarBase64,
+    ukuran: ukuran.length > 0? ukuran : [],
     diskon: diskon? parseInt(diskon) : 0,
     ongkir: ongkir? parseInt(ongkir) : 0,
     rating: rating? parseFloat(rating) : 4.8,
     terjual: terjual? parseInt(terjual) : Math.floor(Math.random() * 500) + 50,
-    lingkarDada: lingkarDada || "",
     bahan: bahan || "Tidak disebutkan",
-    deskripsi: deskripsi || "Bahan berkualitas, nyaman dipakai sehari-hari."
+    ukuranDetail: ukuranDetail || "",
+    deskripsi: deskripsi || "Produk original, kualitas terjamin."
   });
+
   localStorage.setItem('produk', JSON.stringify(produk));
 
   document.getElementById('status').innerText = '✅ Produk berhasil disimpan!';
@@ -185,40 +232,37 @@ function resetForm(){
   document.getElementById('rating').value = '';
   document.getElementById('terjual').value = '';
   document.getElementById('deskripsi').value = '';
-  document.getElementById('lingkarDada').value = '';
   document.getElementById('bahan').value = '';
-  document.getElementById('gambar1').value = '';
-  document.getElementById('gambar2').value = '';
-  document.getElementById('gambar3').value = '';
-  document.getElementById('gambar4').value = '';
-  document.getElementById('preview').style.display = 'none';
-  document.querySelectorAll('.size-options input').forEach(cb => {
-    cb.checked = (cb.value === 'M' || cb.value === 'L' || cb.value === 'XL');
-  });
+  document.getElementById('ukuranDetail').value = '';
+  document.getElementById('gambarUpload').value = '';
+  gambarBase64 = [];
+  document.getElementById('preview').innerHTML = '';
+  ubahKategori();
 }
 
-// Tampilkan produk dari localStorage
+// Tampilkan produk
 function tampilkanProduk() {
   let produk = JSON.parse(localStorage.getItem('produk')) || [];
   let html = '';
-  
+
   produk.forEach((p, i) => {
     html += `<div class="produk-item">
       <strong>${p.nama}</strong><br>
-      <small style="color:#666">${p.kategori || 'Umum'}</small><br>
+      <small style="color:#666">${p.kategori}</small><br>
       Rp ${parseInt(p.harga).toLocaleString('id-ID')}
       ${p.diskon > 0? `<span style="color:red"> -${p.diskon}%</span>` : ''}<br>
-      <div class="info-extra">⭐ ${p.rating || 4.8} | Terjual ${p.terjual || 0}+</div>
-      <div class="info-extra">Ukuran: ${(p.ukuran || ['M','L','XL']).join(', ')}</div>
-      ${p.lingkarDada? `<div class="info-extra">📏 Lingkar Dada: ${p.lingkarDada}</div>` : ''}
+      <div class="info-extra">⭐ ${p.rating} | Terjual ${p.terjual}+</div>
+      ${p.ukuran.length > 0? `<div class="info-extra">Ukuran: ${p.ukuran.join(', ')}</div>` : ''}
       ${p.bahan? `<div class="info-extra">🧵 Bahan: ${p.bahan}</div>` : ''}
+      ${p.ukuranDetail? `<div class="info-extra">📏 ${p.ukuranDetail}</div>` : ''}
       ${p.ongkir > 0? `<div class="info-extra">🚚 Ongkir: Rp ${p.ongkir.toLocaleString('id-ID')}</div>` : ''}
-      <small style="color:#888">${p.deskripsi.substring(0, 60)}${p.deskripsi.length > 60 ? '...' : ''}</small><br>
-      ${p.gambar.map(g => `<img src="${g}">`).join('')}
+      <div style="display:flex;gap:5px;margin-top:8px">
+        ${p.gambar.slice(0,3).map(g => `<img src="${g}">`).join('')}
+      </div>
       <button class="btn-hapus" onclick="hapusProduk(${i})">Hapus</button>
     </div>`;
   });
-  
+
   document.getElementById('daftarProduk').innerHTML = html || '<p>Belum ada produk</p>';
 }
 
@@ -235,15 +279,16 @@ function hapusProduk(index){
 
 // Hapus semua
 document.getElementById('btnHapusSemua').onclick = () => {
-  if(confirm('Hapus semua produk?')){
+  if(confirm('Hapus semua produk? Data tidak bisa dikembalikan!')){
     localStorage.removeItem('produk');
     tampilkanProduk();
     document.getElementById('status').innerText = 'Semua produk dihapus';
   }
 };
 
-// Load saat buka halaman
+// Init
+ubahKategori();
 tampilkanProduk();
 </script>
 </body>
-  </html>
+    </html>
